@@ -12,4 +12,9 @@ public class MenuManager : MonoBehaviour {
     {
         SceneManager.LoadScene("MainScene");
     }
+
+    public void launchGame2()
+    {
+        SceneManager.LoadScene("MainScene2");
+    }
 }

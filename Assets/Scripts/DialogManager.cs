@@ -13,10 +13,12 @@ public class DialogManager : MonoBehaviour {
     [Header("Special actions")]
     public moveDoor md;
     public MoveLaser laser;
+    public typeEvent first;
 
     public enum typeEvent
     {
-        intro
+        intro,
+        intro2
     }
 
     private typeEvent e;
@@ -26,12 +28,12 @@ public class DialogManager : MonoBehaviour {
     private void Start()
     {
         currId = 0;
-        launchDialog(typeEvent.intro);
+        launchDialog(first);
     }
 
     public void launchDialog(typeEvent curr)
     {
-        if (!DialogBox.activeInHierarchy)
+        if (currId == 0)
         {
             e = curr;
             DialogBox.SetActive(true);
@@ -54,26 +56,49 @@ public class DialogManager : MonoBehaviour {
             else if (currId == 6)
                 loadText("Feminine voice", "There may be some secondary effects, nothing that should kill.", "I see...", null, null, null);
         }
+        else if (curr == typeEvent.intro2)
+        {
+            if (currId == 0)
+                loadText("...", "...", "(Start level 2)", null, null, null);
+        }
     }
 
     public void nextChoice(int idChoice)
     {
-        if (currId == 0)
+        if (e == typeEvent.intro)
         {
-            if (idChoice == 1) currId = 1;
-            else if (idChoice == 2) currId = 2;
-            else if (idChoice == 3) currId = 3;
-            else if (idChoice == 4) currId = 4;
-        }
-        else if (currId == 1 || currId == 3 || currId == 4)
-        {
-            if (idChoice == 1) currId = 2;
-            else if (idChoice == 2) currId = 5;
-        }
-        else if (currId == 2)
-        {
-            if (idChoice == 1) currId = 6;
-            else if (idChoice == 2)
+            if (currId == 0)
+            {
+                if (idChoice == 1) currId = 1;
+                else if (idChoice == 2) currId = 2;
+                else if (idChoice == 3) currId = 3;
+                else if (idChoice == 4) currId = 4;
+            }
+            else if (currId == 1 || currId == 3 || currId == 4)
+            {
+                if (idChoice == 1) currId = 2;
+                else if (idChoice == 2) currId = 5;
+            }
+            else if (currId == 2)
+            {
+                if (idChoice == 1) currId = 6;
+                else if (idChoice == 2)
+                {
+                    currId = 0;
+                    DialogBox.SetActive(false);
+                    pc.inIntro = false;
+                    md.move();
+                    return;
+                }
+            }
+            else if (currId == 5)
+            {
+                currId = 0;
+                DialogBox.SetActive(false);
+                laser.move();
+                return;
+            }
+            else if (currId == 6)
             {
                 currId = 0;
                 DialogBox.SetActive(false);
@@ -82,14 +107,7 @@ public class DialogManager : MonoBehaviour {
                 return;
             }
         }
-        else if (currId == 5)
-        {
-            currId = 0;
-            DialogBox.SetActive(false);
-            laser.move();
-            return; 
-        }
-        else if (currId == 6)
+        else if (e == typeEvent.intro2)
         {
             currId = 0;
             DialogBox.SetActive(false);

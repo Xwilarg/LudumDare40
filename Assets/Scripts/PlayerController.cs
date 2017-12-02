@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour {
     private const float speed = 5.0f;
     private const float bulletSpeed = 15.0f;
 
+    private CountDeath cd;
+
     public void hideNext()
     {
         darkCounter++;
@@ -41,9 +43,10 @@ public class PlayerController : MonoBehaviour {
             inIntro = false;
         else
             inIntro = true;
-        diff = GameObject.FindGameObjectWithTag("DeathManager").GetComponent<CountDeath>().difficulty;
+        cd = GameObject.FindGameObjectWithTag("DeathManager").GetComponent<CountDeath>();
+        diff = cd.difficulty;
         if (deathText != null)
-            deathText.text = GameObject.FindGameObjectWithTag("DeathManager").GetComponent<CountDeath>().nbDeath.ToString();
+            deathText.text = cd.nbDeath.ToString();
         darkCounter = 0;
         addForce = 0;
         sr = GetComponent<SpriteRenderer>();
@@ -66,7 +69,10 @@ public class PlayerController : MonoBehaviour {
             score++;
             objectTakeText.text = score.ToString() + "/8";
             if (score == 8)
+            {
                 SceneManager.LoadScene("Victory");
+                cd.increaseFile(1);
+            }
         }
         else if (collision.collider.CompareTag("ItemSup"))
         {
