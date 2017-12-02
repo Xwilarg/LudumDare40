@@ -5741,6 +5741,7 @@ MonoBehaviour:
   pc: {fileID: 340811142}
   md: {fileID: 461919061}
   laser: {fileID: 1833837028}
+  first: 0
 --- !u!1 &1833837023 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1828226791581434, guid: 0ec0b9699692e964291b6172fa53b976,
