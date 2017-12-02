@@ -16,6 +16,7 @@ public class MoveByBullets : MonoBehaviour {
         if (alreadyMoved) return;
         if (collision.collider.CompareTag("Bullet"))
         {
+            alreadyMoved = true;
             Vector2 velo = collision.gameObject.GetComponent<Rigidbody2D>().velocity;
             if (Mathf.Abs(velo.x) < Mathf.Abs(velo.y))
             {

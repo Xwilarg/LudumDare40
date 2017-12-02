@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class LaunchCrate : MonoBehaviour {
 
@@ -15,7 +13,7 @@ public class LaunchCrate : MonoBehaviour {
 
     private void Start()
     {
-        refTime = 30f;
+        refTime = 3f;
         currTime = 0f;
         rb = GetComponent<Rigidbody2D>();
         pc = player.GetComponent<PlayerController>();
@@ -26,12 +24,12 @@ public class LaunchCrate : MonoBehaviour {
         currTime += Time.deltaTime;
         if (pc.inIntro || pc.isDead) return;
         float angle = Mathf.Atan2(player.transform.position.y - transform.position.y, player.transform.position.x - transform.position.x);
-        transform.rotation = Quaternion.Euler(0, 0, (180 / Mathf.PI) * (angle - 48.8f));
-        GameObject crate = Instantiate(projectile, transform.position, Quaternion.identity);
+        transform.rotation = Quaternion.Euler(0, 0, (180 / Mathf.PI) * (angle - 48.65f));
         if (currTime > refTime)
         {
             currTime = 0f;
-            crate.GetComponent<Rigidbody2D>().AddForce(transform.up * 1000, ForceMode2D.Impulse);
+            GameObject crate = Instantiate(projectile, transform.position - transform.up, Quaternion.identity);
+            crate.GetComponent<Rigidbody2D>().AddForce(-transform.up * 1000, ForceMode2D.Impulse);
         }
     }
 }

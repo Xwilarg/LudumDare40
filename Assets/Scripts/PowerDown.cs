@@ -4,7 +4,8 @@ public class PowerDown : MonoBehaviour {
 
 	public enum powerDownE
     {
-        addForce
+        addForce,
+        darker
     }
 
     public powerDownE pde;

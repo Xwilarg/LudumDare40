@@ -1,16 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MoveLaser : MonoBehaviour {
 
     public GameObject gameOver;
     private Rigidbody2D rb;
     public PlayerController pc;
+    public float refTime;
+    public float currTime;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        refTime = -1f;
+        currTime = 0f;
+    }
+
+    private void Update()
+    {
+        if (refTime == -1f) return;
+        currTime += Time.deltaTime;
+        if (currTime > refTime)
+            SceneManager.LoadScene("DeathScene");
     }
 
     public void move()
@@ -27,6 +38,7 @@ public class MoveLaser : MonoBehaviour {
             gameOver.SetActive(true);
             pc.isDead = true;
             pc.resetVelocity();
+            refTime = .5f;
         }
     }
 }

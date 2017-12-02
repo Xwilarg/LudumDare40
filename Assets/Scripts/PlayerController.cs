@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
-    public int addForce;
+    private int addForce;
 
     public bool inIntro { set; get; }
     public bool isDead { set; get; }
@@ -12,6 +13,8 @@ public class PlayerController : MonoBehaviour {
     public GameObject gun;
     public GameObject bullet;
     private int score;
+    public GameObject dark1, dark2, dark3, dark4;
+    private int darkCounter;
 
     private SpriteRenderer sr;
     private Rigidbody2D rb;
@@ -20,23 +23,37 @@ public class PlayerController : MonoBehaviour {
     private const float speed = 5.0f;
     private const float bulletSpeed = 15.0f;
 
+    public void hideNext()
+    {
+        darkCounter++;
+        if (darkCounter == 1) dark1.SetActive(true);
+        else if (darkCounter == 2) dark2.SetActive(true);
+        else if (darkCounter == 3) dark3.SetActive(true);
+        else if (darkCounter == 4) dark4.SetActive(true);
+    }
+
     private void Start()
     {
+        if (SceneManager.GetActiveScene().name == "DeathScene")
+            inIntro = false;
+        else
+            inIntro = true;
+        darkCounter = 0;
         addForce = 0;
         sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         score = 0;
         mainCam = Camera.main;
-        inIntro = true;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("ItemBase1"))
         {
-            switch (collision.gameObject.GetComponent<PowerDown>().pde)
+            switch ((int)collision.gameObject.GetComponent<PowerDown>().pde)
             {
-                case 0: addForce++; break; 
+                case 0: addForce++; break;
+                case 1: hideNext(); break;
                 default: break;
             }
             Destroy(collision.gameObject);
