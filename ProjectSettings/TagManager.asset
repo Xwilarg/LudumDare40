@@ -6,6 +6,8 @@ TagManager:
   tags:
   - ItemBase1
   - Wall
+  - StopLaser
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -42,6 +44,9 @@ TagManager:
   m_SortingLayers:
   - name: Floor
     uniqueID: 1739192925
+    locked: 0
+  - name: Laser
+    uniqueID: 1733403215
     locked: 0
   - name: Door
     uniqueID: 3280382565
