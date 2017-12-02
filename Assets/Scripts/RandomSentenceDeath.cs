@@ -14,7 +14,7 @@ public class RandomSentenceDeath : MonoBehaviour {
         {
             case 0: sentence.text = "Are you even trying ?"; break;
             case 1: sentence.text = "Death won't save you, I still have many clones of you."; break;
-            case 2: sentence.text = "Come on, this is already the easiest difficulty!"; break;
+            case 2: sentence.text = "Another death... take your time..."; break;
             case 3: sentence.text = "Where is the tutorial ? This is the tutorial!"; break;
             case 4: sentence.text = "That was fun but you can begin to try now."; break;
             case 5: sentence.text = "Why the robots aren't helping you ? They consider you as too unevoled to survive."; break;

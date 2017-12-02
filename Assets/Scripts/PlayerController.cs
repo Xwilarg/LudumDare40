@@ -60,7 +60,9 @@ public class PlayerController : MonoBehaviour {
             }
             Destroy(collision.gameObject);
             score++;
-            objectTakeText.text = score.ToString();
+            objectTakeText.text = score.ToString() + "/8";
+            if (score == 8)
+                SceneManager.LoadScene("Victory");
         }
     }
 

@@ -3,21 +3,18 @@
 public class MoveByBullets : MonoBehaviour {
 
     private Rigidbody2D rb;
-    private bool alreadyMoved;
+    public Vector2 direction;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        alreadyMoved = false;
+        rb = GetComponentInParent<Rigidbody2D>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (alreadyMoved) return;
         if (collision.collider.CompareTag("Bullet"))
         {
-            alreadyMoved = true;
-            rb.velocity = collision.gameObject.GetComponent<Rigidbody2D>().velocity;
+            rb.AddForce(direction * 1000f, ForceMode2D.Impulse);
             Destroy(collision.gameObject);
         }
     }

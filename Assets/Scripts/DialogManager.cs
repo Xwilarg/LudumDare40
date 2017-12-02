@@ -52,7 +52,7 @@ public class DialogManager : MonoBehaviour {
             else if (currId == 5)
                 loadText("Feminine voice", "I don't think you understood your place here.", "...", null, null, null);
             else if (currId == 6)
-                loadText("Feminine voice", "I wouldn't send someone as you if it was safe.", "Obviously", null, null, null);
+                loadText("Feminine voice", "There may be some secondary effects, nothing that should kill.", "I see...", null, null, null);
         }
     }
 
