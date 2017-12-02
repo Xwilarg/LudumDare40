@@ -6,12 +6,16 @@ public class KillPlayer : MonoBehaviour {
     private Rigidbody2D rb;
     private PlayerController pc;
 
-    private const float speed = 30f;
+    private float speed;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         pc = player.GetComponent<PlayerController>();
+        int diff = GameObject.FindGameObjectWithTag("DeathManager").GetComponent<CountDeath>().difficulty;
+        if (diff == 1) speed = 10f;
+        else if (diff == 2) speed = 20f;
+        else if (diff == 3) speed = 30f;
     }
 
     private void Update()

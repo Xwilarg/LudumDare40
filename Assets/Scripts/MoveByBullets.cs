@@ -17,21 +17,7 @@ public class MoveByBullets : MonoBehaviour {
         if (collision.collider.CompareTag("Bullet"))
         {
             alreadyMoved = true;
-            Vector2 velo = collision.gameObject.GetComponent<Rigidbody2D>().velocity;
-            if (Mathf.Abs(velo.x) < Mathf.Abs(velo.y))
-            {
-                if (velo.x > 0)
-                    rb.velocity = new Vector2(10f, 0.0f);
-                else
-                    rb.velocity = new Vector2(-10f, 0.0f);
-            }
-            else
-            {
-                if (velo.y > 0)
-                    rb.velocity = new Vector2(0.0f, 10f);
-                else
-                    rb.velocity = new Vector2(0.0f, -10f);
-            }
+            rb.velocity = collision.gameObject.GetComponent<Rigidbody2D>().velocity;
             Destroy(collision.gameObject);
         }
     }

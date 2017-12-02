@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour {
     private SpriteRenderer sr;
     private Rigidbody2D rb;
     Camera mainCam;
+    private int diff;
 
     private const float speed = 5.0f;
     private const float bulletSpeed = 15.0f;
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour {
             inIntro = false;
         else
             inIntro = true;
+        diff = GameObject.FindGameObjectWithTag("DeathManager").GetComponent<CountDeath>().difficulty;
         darkCounter = 0;
         addForce = 0;
         sr = GetComponent<SpriteRenderer>();
@@ -70,8 +72,8 @@ public class PlayerController : MonoBehaviour {
     private void Update ()
     {
         if (inIntro || isDead) return;
-        float horAxis = Random.Range(-.3f, .3f) * addForce;
-        float verAxis = Random.Range(-.3f, .3f) * addForce;
+        float horAxis = Random.Range(-.1f * diff, .1f * diff) * addForce;
+        float verAxis = Random.Range(-.1f * diff, .1f * diff) * addForce;
         Vector3 mouse = mainCam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, mainCam.transform.position.y - transform.position.y));
         float angle = Mathf.Atan2(mouse.y - transform.position.y, mouse.x - transform.position.x);
         transform.rotation = Quaternion.Euler(0, 0, (180 / Mathf.PI) * (angle - 89.5f));

@@ -9,6 +9,7 @@ TagManager:
   - StopLaser
   - Bullet
   - DeathManager
+  - Crate
   layers:
   - Default
   - TransparentFX

@@ -39,20 +39,20 @@ public class DialogManager : MonoBehaviour {
         if (curr == typeEvent.intro)
         {
             if (currId == 0)
-                loadText("Feminin voice", "Subject, are you awake ?", "Who are you ?", "Yes", "5 more minutes please...", "(Don't answer)");
+                loadText("Feminine voice", "Subject, are you awake ?", "Who are you ?", "Yes", "5 more minutes please...", "(Don't answer)");
             else if (currId == 1)
-                loadText("Feminin voice", "That's none of your business, you're only a slave here.", "Sorry", "F*ck you", null, null);
+                loadText("Feminine voice", "That's none of your business, you're only a slave here.", "Sorry", "F*ck you", null, null);
             else if (currId == 2)
-                loadText("Feminin voice", "You have to clean this room, eat all the wastes of magical rock so they will break up in your body.\n" + 
+                loadText("Feminine voice", "You have to clean this room, eat all the wastes of magical rock so they will break up in your body.\n" + 
                     "We provided you an energy accumulator gun to help you, don't damage it.", "Isn't that dangerous ?", "Sure", null, null);
             else if (currId == 3)
-                loadText("Feminin voice", "Who do you think you are ? Wake up!", "Sorry", "F*ck you", null, null);
+                loadText("Feminine voice", "Who do you think you are ? Wake up!", "Sorry", "F*ck you", null, null);
             else if (currId == 4)
-                loadText("Feminin voice", "Don't make me waking you up, you would regret it.", "Sorry", "F*ck you", null, null);
+                loadText("Feminine voice", "Don't make me waking you up, you would regret it.", "Sorry", "F*ck you", null, null);
             else if (currId == 5)
-                loadText("Feminin voice", "I don't think you understood your place here.", "...", null, null, null);
+                loadText("Feminine voice", "I don't think you understood your place here.", "...", null, null, null);
             else if (currId == 6)
-                loadText("Feminin voice", "I wouldn't send someone as you if it was safe.", "Obviously", null, null, null);
+                loadText("Feminine voice", "I wouldn't send someone as you if it was safe.", "Obviously", null, null, null);
         }
     }
 

@@ -13,7 +13,10 @@ public class LaunchCrate : MonoBehaviour {
 
     private void Start()
     {
-        refTime = 3f;
+        int diff = GameObject.FindGameObjectWithTag("DeathManager").GetComponent<CountDeath>().difficulty;
+        if (diff == 1) refTime = 3f;
+        else if (diff == 2) refTime = 2f;
+        else if (diff == 3) refTime = 1f;
         currTime = 0f;
         rb = GetComponent<Rigidbody2D>();
         pc = player.GetComponent<PlayerController>();
