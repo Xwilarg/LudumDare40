@@ -10,11 +10,13 @@ public class PlayerController : MonoBehaviour {
     public bool isDead { set; get; }
 
     public Text objectTakeText;
+    public Text relicTakeText;
     public GameObject gun;
     public GameObject bullet;
     private int score;
     public GameObject dark1, dark2, dark3, dark4;
     private int darkCounter;
+    public Text deathText;
 
     private SpriteRenderer sr;
     private Rigidbody2D rb;
@@ -40,6 +42,8 @@ public class PlayerController : MonoBehaviour {
         else
             inIntro = true;
         diff = GameObject.FindGameObjectWithTag("DeathManager").GetComponent<CountDeath>().difficulty;
+        if (deathText != null)
+            deathText.text = GameObject.FindGameObjectWithTag("DeathManager").GetComponent<CountDeath>().nbDeath.ToString();
         darkCounter = 0;
         addForce = 0;
         sr = GetComponent<SpriteRenderer>();
@@ -63,6 +67,11 @@ public class PlayerController : MonoBehaviour {
             objectTakeText.text = score.ToString() + "/8";
             if (score == 8)
                 SceneManager.LoadScene("Victory");
+        }
+        else if (collision.collider.CompareTag("ItemSup"))
+        {
+            Destroy(collision.gameObject);
+            relicTakeText.text = "1/1";
         }
     }
 

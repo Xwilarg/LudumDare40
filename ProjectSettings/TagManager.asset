@@ -10,6 +10,7 @@ TagManager:
   - Bullet
   - DeathManager
   - Crate
+  - ItemSup
   layers:
   - Default
   - TransparentFX

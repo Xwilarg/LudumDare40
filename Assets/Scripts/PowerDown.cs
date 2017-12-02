@@ -5,7 +5,8 @@ public class PowerDown : MonoBehaviour {
 	public enum powerDownE
     {
         addForce,
-        darker
+        darker,
+        premium
     }
 
     public Vector3 help;
