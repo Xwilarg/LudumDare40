@@ -5,8 +5,8 @@ public class PlayerController : MonoBehaviour {
 
     public int addForce;
 
-    public bool inIntro { set; private get; }
-    public bool isDead { set; private get; }
+    public bool inIntro { set; get; }
+    public bool isDead { set; get; }
 
     public Text objectTakeText;
     public GameObject gun;
@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour {
             horAxis += 1f;
         if (Input.GetButtonDown("Fire"))
         {
-            GameObject bulletIns = Instantiate(bullet, gun.transform.position + transform.forward, Quaternion.identity);
+            GameObject bulletIns = Instantiate(bullet, gun.transform.position, Quaternion.identity);
             bulletIns.GetComponent<Rigidbody2D>().AddForce(transform.up * bulletSpeed, ForceMode2D.Impulse);
         }
         rb.velocity = new Vector2(Mathf.Lerp(0, horAxis * speed, 0.8f), Mathf.Lerp(0, verAxis * speed, 0.8f));

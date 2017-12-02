@@ -67,7 +67,7 @@ public class DialogManager : MonoBehaviour {
         }
         else if (currId == 1 || currId == 3 || currId == 4)
         {
-            if (idChoice == 1) currId = 4;
+            if (idChoice == 1) currId = 2;
             else if (idChoice == 2) currId = 5;
         }
         else if (currId == 2)
@@ -87,7 +87,7 @@ public class DialogManager : MonoBehaviour {
             currId = 0;
             DialogBox.SetActive(false);
             laser.move();
-            return;
+            return; 
         }
         else if (currId == 6)
         {
