@@ -7,4 +7,9 @@ public class ReloadMainGame : MonoBehaviour {
     {
         SceneManager.LoadScene("MainScene");
     }
+
+    public void mainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 }
