@@ -111,7 +111,7 @@ public class PlayerController : NetworkBehaviour {
     {
         GameObject bulletIns = Instantiate(bullet, gun.transform.position, Quaternion.identity);
         bulletIns.GetComponent<DeleteCollision>().owner = gameObject;
-        //NetworkServer.SpawnWithClientAuthority(bulletIns, connectionToClient);
+        NetworkServer.SpawnWithClientAuthority(bulletIns, connectionToClient);
         bulletIns.GetComponent<NetworkBullet>().launch(gameObject);
     }
 
