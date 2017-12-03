@@ -155,7 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TransformSyncMode: 2
   m_SendInterval: 0.1
-  m_SyncRotationAxis: 3
+  m_SyncRotationAxis: 2
   m_RotationSyncCompression: 0
   m_SyncSpin: 0
   m_MovementTheshold: 0.001
@@ -177,7 +177,7 @@ MonoBehaviour:
   objectTakeText: {fileID: 0}
   relicTakeText: {fileID: 0}
   gun: {fileID: 1083993371984456}
-  bullet: {fileID: 1905735881846232, guid: e73499fdd895de34b9d8eafb21978d23, type: 2}
+  bullet: {fileID: 1639467712657210, guid: 629f68f005f0f12419657bdc13b88b2d, type: 2}
   dark1: {fileID: 0}
   dark2: {fileID: 0}
   dark3: {fileID: 0}

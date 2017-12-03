@@ -115,11 +115,17 @@ public class PlayerController : NetworkBehaviour {
             horAxis += 1f;
         if (Input.GetButtonDown("Fire"))
         {
-            GameObject bulletIns = Instantiate(bullet, gun.transform.position, Quaternion.identity);
             if (isNetwork)
+            {
+                GameObject bulletIns = Instantiate(bullet, gun.transform.position, Quaternion.identity);
                 bulletIns.GetComponent<Rigidbody2D>().AddForce(transform.up * 1000, ForceMode2D.Impulse);
+                NetworkServer.SpawnWithClientAuthority(bulletIns, connectionToClient);
+            }
             else
+            {
+                GameObject bulletIns = Instantiate(bullet, gun.transform.position, Quaternion.identity);
                 bulletIns.GetComponent<Rigidbody2D>().AddForce(transform.up * bulletSpeed, ForceMode2D.Impulse);
+            }
         }
         rb.velocity = new Vector2(Mathf.Lerp(0, horAxis * speed, 0.8f), Mathf.Lerp(0, verAxis * speed, 0.8f));
     }

@@ -11,7 +11,7 @@ public class RandomSentenceDeath : MonoBehaviour {
         cd.nbDeath++;
         if (cd.levelPlaying == 3)
         {
-            GetComponent<Text>().text = "You score: " + cd.score;
+            GetComponent<Text>().text = "Your score: " + cd.score;
         }
         else
         {

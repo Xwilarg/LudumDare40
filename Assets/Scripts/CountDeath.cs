@@ -5,7 +5,7 @@ public class CountDeath : MonoBehaviour {
     
     public int nbDeath { set; get; }
     public int difficulty { set; get; }
-    public int currLevel { set; private get; }
+    public int currLevel { set; get; }
     public int levelPlaying { set; get; }
     public int score { set; get; }
     public string ip { set; get; }
