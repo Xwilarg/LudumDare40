@@ -56,6 +56,11 @@ public class GenerateRandomly : MonoBehaviour {
         else if (diff == 2) maxWall = Random.Range(10, 15);
         else if (diff == 3) maxWall = Random.Range(15, 20);
         else throw new System.Exception("diff have an invalid value.");
+        int maxCrate;
+        if (diff == 1) maxCrate = Random.Range(1, 3);
+        else if (diff == 2) maxCrate = Random.Range(2, 4);
+        else if (diff == 3) maxCrate = Random.Range(3, 6);
+        else throw new System.Exception("diff have an invalid value.");
         int chanceSpawn = 50;
         for (int i = 0; i < maxWall; i++)
         {
@@ -66,6 +71,16 @@ public class GenerateRandomly : MonoBehaviour {
                 yPos = Random.Range(0, maxY);
             } while (map[xPos, yPos].go != null || !isAreaFree(new Vector2(xPos, yPos)));
             map[xPos, yPos].go = wall;
+        }
+        for (int i = 0; i < maxCrate; i++)
+        {
+            int xPos, yPos;
+            do
+            {
+                xPos = Random.Range(0, 30);
+                yPos = Random.Range(0, maxY);
+            } while (map[xPos, yPos].go != null);
+            map[xPos, yPos].go = box;
         }
         for (int i = 0; i < maxMove; i++)
         {

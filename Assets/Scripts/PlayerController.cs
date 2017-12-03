@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour {
 
     private void Start()
     {
-        if (SceneManager.GetActiveScene().name == "DeathScene")
+        if (SceneManager.GetActiveScene().name == "DeathScene" || SceneManager.GetActiveScene().name == "MultiScene")
             inIntro = false;
         else
             inIntro = true;

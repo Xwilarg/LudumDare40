@@ -11,6 +11,7 @@ TagManager:
   - DeathManager
   - Crate
   - ItemSup
+  - NetworkManager
   layers:
   - Default
   - TransparentFX

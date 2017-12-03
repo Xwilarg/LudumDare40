@@ -31,7 +31,8 @@ public class LaunchCrate : MonoBehaviour {
         if (currTime > refTime)
         {
             currTime = 0f;
-            GameObject crate = Instantiate(projectile, transform.position - transform.up / 4, Quaternion.identity);
+            GameObject crate = Instantiate(projectile, transform.position - transform.up / 4f, Quaternion.identity);
+            crate.GetComponent<DeleteCollision>().owner = gameObject;
             crate.GetComponent<Rigidbody2D>().AddForce(-transform.up * 1000, ForceMode2D.Impulse);
         }
     }

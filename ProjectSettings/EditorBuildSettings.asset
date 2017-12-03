@@ -23,3 +23,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/RandomScene.unity
     guid: c48c07470ee97234c81fcae64cf5664a
+  - enabled: 1
+    path: Assets/Scenes/MultiScene.unity
+    guid: 0ff995b35598c1a47baf6db8f2c31868
