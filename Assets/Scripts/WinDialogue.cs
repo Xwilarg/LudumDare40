@@ -2,10 +2,15 @@
 using UnityEngine.UI;
 
 public class WinDialogue : MonoBehaviour {
-    
-	void Start () {
-        int nbDeath = GameObject.FindGameObjectWithTag("DeathManager").GetComponent<CountDeath>().nbDeath;
-        int diff = GameObject.FindGameObjectWithTag("DeathManager").GetComponent<CountDeath>().difficulty;
+
+    public bool isNormalMode { set; private get; }
+    private CountDeath cd;
+
+    void Start()
+    {
+        cd = GameObject.FindGameObjectWithTag("DeathManager").GetComponent<CountDeath>();
+        int nbDeath = cd.nbDeath;
+        int diff = cd.difficulty;
         if (nbDeath > 3)
             GetComponent<Text>().text = nbDeath + " deaths, I have seen better, but nice job I guess.";
         else if (nbDeath > 0)

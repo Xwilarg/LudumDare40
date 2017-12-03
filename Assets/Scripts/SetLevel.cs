@@ -41,6 +41,8 @@ public class SetLevel : MonoBehaviour {
 
     public void launchGame(int mode)
     {
+        cd.nbDeath = 0;
+        cd.score = 0;
         cd.levelPlaying = mode;
         if (mode == 1)
             SceneManager.LoadScene("MainScene");

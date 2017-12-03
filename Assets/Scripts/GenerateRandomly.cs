@@ -12,7 +12,7 @@ public class GenerateRandomly : MonoBehaviour {
         public int supp { set; get; }
     }
     Item[,] map;
-    const int maxY = 19 - 4;
+    const int maxY = 19 - 4 - 1;
 
     private bool isAreaFree(Vector2 pos)
     {
@@ -42,24 +42,24 @@ public class GenerateRandomly : MonoBehaviour {
             }
         }
         int maxMove;
-        if (diff == 1) maxMove = Random.Range(0, 1);
+        if (diff == 1) maxMove = 1;
         else if (diff == 2) maxMove = 1;
-        else if (diff == 3) maxMove = Random.Range(1, 2);
+        else if (diff == 3) maxMove = Random.Range(1, 3);
         else throw new System.Exception("diff have an invalid value.");
         int maxFreeze;
         if (diff == 1) maxFreeze = 1;
-        else if (diff == 2) maxFreeze = Random.Range(1, 2);
-        else if (diff == 3) maxFreeze = Random.Range(2, 3);
+        else if (diff == 2) maxFreeze = Random.Range(1, 3);
+        else if (diff == 3) maxFreeze = Random.Range(2, 4);
         else throw new System.Exception("diff have an invalid value.");
         int maxWall;
-        if (diff == 1) maxWall = Random.Range(5, 10);
-        else if (diff == 2) maxWall = Random.Range(10, 15);
-        else if (diff == 3) maxWall = Random.Range(15, 20);
+        if (diff == 1) maxWall = Random.Range(5, 11);
+        else if (diff == 2) maxWall = Random.Range(10, 16);
+        else if (diff == 3) maxWall = Random.Range(15, 21);
         else throw new System.Exception("diff have an invalid value.");
         int maxCrate;
-        if (diff == 1) maxCrate = Random.Range(1, 3);
-        else if (diff == 2) maxCrate = Random.Range(2, 4);
-        else if (diff == 3) maxCrate = Random.Range(3, 6);
+        if (diff == 1) maxCrate = Random.Range(1, 4);
+        else if (diff == 2) maxCrate = Random.Range(2, 5);
+        else if (diff == 3) maxCrate = Random.Range(3, 7);
         else throw new System.Exception("diff have an invalid value.");
         int chanceSpawn = 50;
         for (int i = 0; i < maxWall; i++)
@@ -71,6 +71,29 @@ public class GenerateRandomly : MonoBehaviour {
                 yPos = Random.Range(0, maxY);
             } while (map[xPos, yPos].go != null || !isAreaFree(new Vector2(xPos, yPos)));
             map[xPos, yPos].go = wall;
+        }
+        int nbLasers = maxWall;
+        for (int i = 0; i < 30; i++)
+        {
+            for (int y = 0; y < maxY; y++)
+            {
+                if (map[i, y].go != null)
+                {
+                    if (map[i, y].go == wall)
+                    {
+                        Vector2[] allPos = new Vector2[4] { new Vector2(0, 1), new Vector2(1, 0), new Vector2(-1, 0), new Vector2(0, -1) };
+                        bool[] doesRot = new bool[4] { false, true, true, false };
+                        Vector2 currPos = new Vector2(i, y);
+                        if (Random.Range(0, 100) < chanceSpawn || nbLasers + maxWall / 3 < maxWall)
+                        {
+                            nbLasers--;
+                            int z = Random.Range(0, 4);
+                            if (isDirectionWall(currPos + allPos[z], allPos[z]))
+                                addLasers(currPos + allPos[z], allPos[z], doesRot[z]);
+                        }
+                    }
+                }
+            }
         }
         for (int i = 0; i < maxCrate; i++)
         {
@@ -101,29 +124,6 @@ public class GenerateRandomly : MonoBehaviour {
                 yPos = Random.Range(2, maxY - 2);
             } while (map[xPos, yPos].go != null);
             map[xPos, yPos].go = robotFreeze;
-        }
-        int nbLasers = maxWall;
-        for (int i = 0; i < 30; i++)
-        {
-            for (int y = 0; y < maxY; y++)
-            {
-                if (map[i, y].go != null)
-                {
-                    if (map[i, y].go == wall)
-                    {
-                        Vector2[] allPos = new Vector2[4] { new Vector2(0, 1), new Vector2(1, 0), new Vector2(-1, 0), new Vector2(0, -1) };
-                        bool[] doesRot = new bool[4] { false, true, true, false };
-                        Vector2 currPos = new Vector2(i, y);
-                        if (Random.Range(0, 100) < chanceSpawn || nbLasers + maxWall / 3 < maxWall)
-                        {
-                            nbLasers--;
-                            int z = Random.Range(0, 4);
-                            if (isDirectionWall(currPos + allPos[z], allPos[z]))
-                                addLasers(currPos + allPos[z], allPos[z], doesRot[z]);
-                        }
-                    }
-                }
-            }
         }
         for (int i = 0; i < 8; i++)
         {
@@ -189,7 +189,7 @@ public class GenerateRandomly : MonoBehaviour {
         if (pos.x + dir.x * distance >= 30 || pos.x + dir.x * distance < 0
             || pos.y + dir.y * distance >= maxY || pos.y + dir.y * distance < 0)
         {
-            if (pos.x >= 0 && pos.x < 30 && pos.y >= 0 && pos.y < maxY)
+            if (pos.x >= 0 && pos.x < 30 && pos.y >= 0 && pos.y < maxY && map[(int)pos.x, (int)pos.y].go == null)
                 map[(int)pos.x, (int)pos.y].go = wall;
             return;
         }

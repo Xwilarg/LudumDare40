@@ -70,8 +70,16 @@ public class PlayerController : MonoBehaviour {
             objectTakeText.text = score.ToString() + "/8";
             if (score == 8)
             {
-                SceneManager.LoadScene("Victory");
-                cd.increaseFile(1);
+                if (cd.levelPlaying == 3)
+                {
+                    cd.score += 250;
+                    SceneManager.LoadScene("DeathScene");
+                }
+                else
+                {
+                    SceneManager.LoadScene("Victory");
+                    cd.increaseFile(1);
+                }
             }
         }
         else if (collision.collider.CompareTag("ItemSup"))

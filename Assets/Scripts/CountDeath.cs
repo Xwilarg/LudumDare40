@@ -7,6 +7,7 @@ public class CountDeath : MonoBehaviour {
     public int difficulty { set; get; }
     public int currLevel { set; private get; }
     public int levelPlaying { set; get; }
+    public int score { set; get; }
 
     void Start()
     {

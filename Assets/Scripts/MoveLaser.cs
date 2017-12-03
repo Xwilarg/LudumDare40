@@ -8,12 +8,14 @@ public class MoveLaser : MonoBehaviour {
     public PlayerController pc;
     public float refTime { set; get; }
     public float currTime { set; get; }
+    private CountDeath cd;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         refTime = -1f;
         currTime = 0f;
+        cd = GameObject.FindGameObjectWithTag("DeathManager").GetComponent<CountDeath>();
     }
 
     private void Update()
@@ -21,7 +23,10 @@ public class MoveLaser : MonoBehaviour {
         if (refTime == -1f) return;
         currTime += Time.deltaTime;
         if (currTime > refTime)
+        {
+            cd.score -= 100;
             SceneManager.LoadScene("DeathScene");
+        }
     }
 
     public void move()
