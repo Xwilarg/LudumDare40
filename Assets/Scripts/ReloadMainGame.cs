@@ -16,6 +16,8 @@ public class ReloadMainGame : MonoBehaviour {
             SceneManager.LoadScene("MainScene");
         else if (currentLevel == 2)
             SceneManager.LoadScene("MainScene2");
+        else if (currentLevel == 3)
+            SceneManager.LoadScene("RandomScene");
     }
 
     public void mainMenu()

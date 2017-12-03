@@ -18,7 +18,8 @@ public class DialogManager : MonoBehaviour {
     public enum typeEvent
     {
         intro,
-        intro2
+        intro2,
+        random
     }
 
     private typeEvent e;
@@ -60,6 +61,12 @@ public class DialogManager : MonoBehaviour {
         {
             if (currId == 0)
                 loadText("...", "...", "(Start level 2)", null, null, null);
+        }
+        else if (curr == typeEvent.random)
+        {
+            DialogBox.SetActive(false);
+            pc.inIntro = false;
+            md.move();
         }
     }
 

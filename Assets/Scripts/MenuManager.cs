@@ -17,4 +17,9 @@ public class MenuManager : MonoBehaviour {
     {
         SceneManager.LoadScene("MainScene2");
     }
+
+    public void launchGameRandom()
+    {
+        SceneManager.LoadScene("RandomScene");
+    }
 }

@@ -6,8 +6,8 @@ public class MoveLaser : MonoBehaviour {
     public GameObject gameOver;
     private Rigidbody2D rb;
     public PlayerController pc;
-    public float refTime;
-    public float currTime;
+    public float refTime { set; get; }
+    public float currTime { set; get; }
 
     private void Start()
     {

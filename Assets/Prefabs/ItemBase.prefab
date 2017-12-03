@@ -21,9 +21,10 @@ GameObject:
   - component: {fileID: 4682401802998366}
   - component: {fileID: 212765783262472858}
   - component: {fileID: 58367422025598482}
+  - component: {fileID: 114443144112235392}
   m_Layer: 0
   m_Name: ItemBase
-  m_TagString: Untagged
+  m_TagString: ItemBase1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34,9 +35,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1632989453309656}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.08567044, y: 0.6271055, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.61, y: 3.99, z: 0}
+  m_LocalScale: {x: 0.29999998, y: 0.29999998, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -56,6 +57,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.24999999
+--- !u!114 &114443144112235392
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1632989453309656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 046061f22890e114dab8724ba26cc663, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  help: {x: 0, y: 0, z: 0}
+  pde: 0
 --- !u!212 &212765783262472858
 SpriteRenderer:
   m_ObjectHideFlags: 1
