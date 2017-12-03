@@ -4,7 +4,7 @@ public class DeleteCollision : MonoBehaviour {
 
     private const float refTime = 3f;
     private float currTime;
-    public GameObject owner { set; private get; }
+    public GameObject owner { set; get; }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

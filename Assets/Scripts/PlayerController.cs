@@ -24,6 +24,7 @@ public class PlayerController : NetworkBehaviour {
     Camera mainCam;
     private int diff;
     public bool isNetwork { private set; get; }
+    public Vector2 impulse;
 
     private const float speed = 5.0f;
     private const float bulletSpeed = 15.0f;
@@ -41,6 +42,7 @@ public class PlayerController : NetworkBehaviour {
 
     private void Start()
     {
+        impulse = Vector2.zero;
         if (SceneManager.GetActiveScene().name == "DeathScene" || SceneManager.GetActiveScene().name == "MultiScene")
             inIntro = false;
         else
@@ -82,6 +84,7 @@ public class PlayerController : NetworkBehaviour {
                 {
                     SceneManager.LoadScene("Victory");
                     cd.increaseFile(1);
+                    cd.currLevel = 1;
                 }
             }
         }
@@ -90,11 +93,32 @@ public class PlayerController : NetworkBehaviour {
             Destroy(collision.gameObject);
             relicTakeText.text = "1/1";
         }
+        else if (collision.collider.CompareTag("Bullet") && collision.collider.GetComponent<DeleteCollision>().owner != gameObject)
+        {
+            float angle = Mathf.Atan2(collision.transform.position.y - transform.position.y,
+                collision.transform.position.x - transform.position.x);
+            impulse = Quaternion.Euler(0, 0, (180 / Mathf.PI) * (angle - 89.5f)) * Vector2.up * -10;
+            Destroy(collision.gameObject);
+        }
     }
 
     public void resetVelocity()
     {
         rb.velocity = Vector2.zero;
+    }
+
+    private void createBullet()
+    {
+        GameObject bulletIns = Instantiate(bullet, gun.transform.position, Quaternion.identity);
+        bulletIns.GetComponent<DeleteCollision>().owner = gameObject;
+        //NetworkServer.SpawnWithClientAuthority(bulletIns, connectionToClient);
+        bulletIns.GetComponent<NetworkBullet>().launch(gameObject);
+    }
+
+    [Command]
+    private void CmdCreateBullet()
+    {
+        createBullet();
     }
 
     private void Update ()
@@ -117,16 +141,31 @@ public class PlayerController : NetworkBehaviour {
         {
             if (isNetwork)
             {
-                GameObject bulletIns = Instantiate(bullet, gun.transform.position, Quaternion.identity);
-                bulletIns.GetComponent<Rigidbody2D>().AddForce(transform.up * 1000, ForceMode2D.Impulse);
-                NetworkServer.SpawnWithClientAuthority(bulletIns, connectionToClient);
+                if (isServer)
+                    createBullet();
+                else
+                    CmdCreateBullet();
             }
             else
             {
                 GameObject bulletIns = Instantiate(bullet, gun.transform.position, Quaternion.identity);
                 bulletIns.GetComponent<Rigidbody2D>().AddForce(transform.up * bulletSpeed, ForceMode2D.Impulse);
+                bulletIns.GetComponent<DeleteCollision>().owner = gameObject;
             }
         }
-        rb.velocity = new Vector2(Mathf.Lerp(0, horAxis * speed, 0.8f), Mathf.Lerp(0, verAxis * speed, 0.8f));
+        rb.velocity = new Vector2(Mathf.Lerp(0, horAxis * speed, 0.8f), Mathf.Lerp(0, verAxis * speed, 0.8f)) + impulse;
+        if (Mathf.Abs((rb.velocity.x + rb.velocity.y) / 2) < 1f || Mathf.Abs((impulse.x + impulse.y) / 2) < 1f)
+        {
+            impulse.x = 0.0f;
+            impulse.y = 0.0f;
+        }
+        if (impulse.x > 0f)
+            impulse.x -= Time.deltaTime * 10;
+        else if (impulse.x < 0f)
+            impulse.x += Time.deltaTime * 10;
+        if (impulse.y > 0f)
+            impulse.y -= Time.deltaTime * 10;
+        else if (impulse.y < 0f)
+            impulse.y += Time.deltaTime * 10;
     }
 }
