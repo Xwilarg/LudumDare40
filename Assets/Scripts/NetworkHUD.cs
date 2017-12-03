@@ -1,22 +1,19 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class NetworkHUD : NetworkManager {
-
-    public void StartHostS(int port)
+public class NetworkHUD : NetworkManager
+{
+    private void Start()
     {
-        SceneManager.LoadScene("MultiScene");
-        singleton.networkPort = port;
-        singleton.StartHost();
-    }
-
-    public void JoinGameS(string ip, int port)
-    {
-        SceneManager.LoadScene("MultiScene");
-        singleton.networkAddress = ip;
-        singleton.networkPort = port;
-        singleton.StartClient();
+        CountDeath cd = GameObject.FindGameObjectWithTag("DeathManager").GetComponent<CountDeath>();
+        networkPort = cd.port;
+        if (cd.doesHost)
+            StartHost();
+        else
+        {
+            networkAddress = cd.ip;
+            StartClient();
+        }
     }
 }

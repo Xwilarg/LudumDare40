@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : NetworkBehaviour {
 
     private int addForce;
 
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody2D rb;
     Camera mainCam;
     private int diff;
+    public bool isNetwork { private set; get; }
 
     private const float speed = 5.0f;
     private const float bulletSpeed = 15.0f;
@@ -53,6 +55,7 @@ public class PlayerController : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         score = 0;
         mainCam = Camera.main;
+        isNetwork = (GetComponent<NetworkIdentity>() != null);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -96,7 +99,7 @@ public class PlayerController : MonoBehaviour {
 
     private void Update ()
     {
-        if (inIntro || isDead) return;
+        if (inIntro || isDead || (isNetwork && !isLocalPlayer)) return;
         float horAxis = Random.Range(-.1f * diff, .1f * diff) * addForce;
         float verAxis = Random.Range(-.1f * diff, .1f * diff) * addForce;
         Vector3 mouse = mainCam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, mainCam.transform.position.y - transform.position.y));
@@ -113,7 +116,10 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetButtonDown("Fire"))
         {
             GameObject bulletIns = Instantiate(bullet, gun.transform.position, Quaternion.identity);
-            bulletIns.GetComponent<Rigidbody2D>().AddForce(transform.up * bulletSpeed, ForceMode2D.Impulse);
+            if (isNetwork)
+                bulletIns.GetComponent<Rigidbody2D>().AddForce(transform.up * 1000, ForceMode2D.Impulse);
+            else
+                bulletIns.GetComponent<Rigidbody2D>().AddForce(transform.up * bulletSpeed, ForceMode2D.Impulse);
         }
         rb.velocity = new Vector2(Mathf.Lerp(0, horAxis * speed, 0.8f), Mathf.Lerp(0, verAxis * speed, 0.8f));
     }

@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 
-public class SetLevel : MonoBehaviour {
+public class SetLevel : NetworkBehaviour {
 
     public Image b1, b2, b3;
 
@@ -12,12 +13,10 @@ public class SetLevel : MonoBehaviour {
     public Text msgError;
 
     private CountDeath cd;
-    private NetworkHUD nm;
 
     private void Start()
     {
         cd = GameObject.FindGameObjectWithTag("DeathManager").GetComponent<CountDeath>();
-        nm = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkHUD>();
         setDiff(cd.difficulty);
     }
 
@@ -29,6 +28,7 @@ public class SetLevel : MonoBehaviour {
         {
             foreach (string s in ipPart)
             {
+                if (s.Length < 1 || s.Length > 3) return (false);
                 foreach (char c in s)
                 {
                     if (char.IsNumber(c))
@@ -53,17 +53,24 @@ public class SetLevel : MonoBehaviour {
         else if (mode == 4)
         {
             if (port.text != "")
-                nm.StartHostS(System.Convert.ToInt32(port.text));
+            {
+                cd.port = System.Convert.ToInt32(port.text);
+                cd.doesHost = true;
+                SceneManager.LoadScene("MultiScene");
+            }
             else
                 msgError.text = "The port must be filled.";
         }
         else if (mode == 5)
         {
-            if (!checkIp())
-                msgError.text = "The format of the IP is incorrect.";
-            else if (ip.text != "" || port.text != "")
+           // if (!checkIp())
+             //   msgError.text = "The format of the IP is incorrect.";
+            if (ip.text != "" || port.text != "")
             {
-                nm.JoinGameS(ip.text, System.Convert.ToInt32(port.text));
+                cd.port = System.Convert.ToInt32(port.text);
+                cd.ip = ip.text;
+                cd.doesHost = false;
+                SceneManager.LoadScene("MultiScene");
             }
             else
                 msgError.text = "All fields must be filled.";

@@ -8,6 +8,9 @@ public class CountDeath : MonoBehaviour {
     public int currLevel { set; private get; }
     public int levelPlaying { set; get; }
     public int score { set; get; }
+    public string ip { set; get; }
+    public int port { set; get; }
+    public bool doesHost { set; get; }
 
     void Start()
     {

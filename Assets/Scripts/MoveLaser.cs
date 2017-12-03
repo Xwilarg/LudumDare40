@@ -40,10 +40,16 @@ public class MoveLaser : MonoBehaviour {
             rb.velocity = Vector2.zero;
         else if (collision.CompareTag("Player"))
         {
-            gameOver.SetActive(true);
-            pc.isDead = true;
-            pc.resetVelocity();
-            refTime = .5f;
+            PlayerController tmpPc = collision.GetComponent<PlayerController>();
+            if (tmpPc.isNetwork)
+                collision.gameObject.transform.position = Vector2.zero;
+            else
+            {
+                gameOver.SetActive(true);
+                pc.isDead = true;
+                pc.resetVelocity();
+                refTime = .5f;
+            }
         }
     }
 }
