@@ -23,7 +23,8 @@ GameObject:
   - component: {fileID: 114882935946854658}
   - component: {fileID: 50184893424951030}
   - component: {fileID: 58765812951233714}
-  m_Layer: 0
+  - component: {fileID: 114686348870871070}
+  m_Layer: 8
   m_Name: EnergyBall
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -78,6 +79,17 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.25
+--- !u!114 &114686348870871070
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1905735881846232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7e05a0d4d332c45bb54a07124f9d7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114882935946854658
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -118,8 +130,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -900475743
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a24ee555883251e49a99030363411341, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

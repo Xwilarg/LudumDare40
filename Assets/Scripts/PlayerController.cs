@@ -15,6 +15,8 @@ public class PlayerController : NetworkBehaviour {
     public GameObject popup { set; get; }
     public MakeTemporary pop { set; private get; }
 
+    public float magnetForce { private set; get; }
+
     public Text objectTakeText;
     public Text relicTakeText;
     public GameObject gun;
@@ -49,6 +51,7 @@ public class PlayerController : NetworkBehaviour {
 
     private void Start()
     {
+        magnetForce = 0f;
         up = "Up";
         down = "Down";
         left = "Left";
@@ -111,6 +114,11 @@ public class PlayerController : NetworkBehaviour {
             swap(ref right, ref left);
     }
 
+    private void increaseMagnet()
+    {
+        magnetForce += 1f;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("ItemBase1"))
@@ -122,12 +130,14 @@ public class PlayerController : NetworkBehaviour {
                 case 1: hideNext(); pop.reset("<b>CROP SCREEN</b>"); break;
                 case 3: changeCommand(); pop.reset("<b>CHANGE KEYS</b>\n\nHere's your new config:"
                     + "\nUp: " + up + ", Down: " + down + ", Left: " + left + ", Right: " + right); break;
+                case 4: increaseMagnet(); pop.reset("<b>MAGNET</b>"); break;
+                case 5: increaseMagnet(); pop.reset("<b>NONE</b>"); break;
                 default: break;
             }
             Destroy(collision.gameObject);
             score++;
             objectTakeText.text = score.ToString() + "/8";
-            if (score == 8)
+            if (score == 8 && cd.levelPlaying != 6)
             {
                 if (cd.levelPlaying == 3)
                 {

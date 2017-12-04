@@ -34,6 +34,7 @@ public class LaunchCrate : MonoBehaviour {
             GameObject crate = Instantiate(projectile, transform.position - transform.up / 4f, Quaternion.identity);
             crate.GetComponent<DeleteCollision>().owner = gameObject;
             crate.GetComponent<Rigidbody2D>().AddForce(-transform.up * 1000, ForceMode2D.Impulse);
+            crate.GetComponent<MagnetPlayer>().pc = pc;
         }
     }
 }

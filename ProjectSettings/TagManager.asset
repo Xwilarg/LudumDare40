@@ -21,8 +21,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Bullet
+  - ItemFloor
   - 
   - 
   - 
@@ -60,6 +60,9 @@ TagManager:
     locked: 0
   - name: Item
     uniqueID: 3504517351
+    locked: 0
+  - name: Bullet
+    uniqueID: 3394491553
     locked: 0
   - name: Top
     uniqueID: 2382756077

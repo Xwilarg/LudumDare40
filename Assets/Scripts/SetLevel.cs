@@ -75,6 +75,8 @@ public class SetLevel : NetworkBehaviour {
             else
                 msgError.text = "All fields must be filled.";
         }
+        else if (mode == 6)
+            SceneManager.LoadScene("Sandbox");
     }
 
     public void setDiff(int level)

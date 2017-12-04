@@ -12,8 +12,21 @@ public class CountDeath : MonoBehaviour {
     public int port { set; get; }
     public bool doesHost { set; get; }
 
+    public bool laserRobots { set; get; }
+    public bool pushRobots { set; get; }
+    public bool crates { set; get; }
+    public bool shakePowerup { set; get; }
+    public bool keyboardPowerup { set; get; }
+    public bool magnetPowerup { set; get; }
+
     void Start()
     {
+        laserRobots = true;
+        pushRobots = true;
+        crates = true;
+        shakePowerup = true;
+        keyboardPowerup = true;
+        magnetPowerup = true;
         DontDestroyOnLoad(gameObject);
         nbDeath = 0;
         difficulty = 2;

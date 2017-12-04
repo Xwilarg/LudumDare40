@@ -6,6 +6,7 @@ public class GenerateRandomly : MonoBehaviour {
     public GameObject gameOver;
     public GameObject player;
     public GameObject robotMove, robotFreeze, wall, box, objective, laser;
+    CountDeath cd;
     struct Item
     {
         public GameObject go { set; get; }
@@ -31,6 +32,7 @@ public class GenerateRandomly : MonoBehaviour {
 
     void Start()
     {
+        cd = GameObject.FindGameObjectWithTag("DeathManager").GetComponent<CountDeath>();
         diff = GameObject.FindGameObjectWithTag("DeathManager").GetComponent<CountDeath>().difficulty;
         map = new Item[30, maxY];
         for (int i = 0; i < 30; i++)
@@ -42,25 +44,39 @@ public class GenerateRandomly : MonoBehaviour {
             }
         }
         int maxMove;
-        if (diff == 1) maxMove = 1;
-        else if (diff == 2) maxMove = 1;
-        else if (diff == 3) maxMove = Random.Range(1, 3);
-        else throw new System.Exception("diff have an invalid value.");
+        if (cd.laserRobots)
+        {
+            if (diff == 1) maxMove = 1;
+            else if (diff == 2) maxMove = 1;
+            else if (diff == 3) maxMove = Random.Range(1, 3);
+            else throw new System.Exception("diff have an invalid value.");
+        }
+        else maxMove = 0;
         int maxFreeze;
-        if (diff == 1) maxFreeze = 1;
-        else if (diff == 2) maxFreeze = Random.Range(1, 3);
-        else if (diff == 3) maxFreeze = Random.Range(2, 4);
-        else throw new System.Exception("diff have an invalid value.");
+        if (cd.pushRobots)
+        {
+            if (diff == 1) maxFreeze = 1;
+            else if (diff == 2) maxFreeze = Random.Range(1, 3);
+            else if (diff == 3) maxFreeze = Random.Range(2, 4);
+            else throw new System.Exception("diff have an invalid value.");
+        }
+        else
+            maxFreeze = 0;
         int maxWall;
         if (diff == 1) maxWall = Random.Range(5, 11);
         else if (diff == 2) maxWall = Random.Range(10, 16);
         else if (diff == 3) maxWall = Random.Range(15, 21);
         else throw new System.Exception("diff have an invalid value.");
         int maxCrate;
-        if (diff == 1) maxCrate = Random.Range(1, 4);
-        else if (diff == 2) maxCrate = Random.Range(2, 5);
-        else if (diff == 3) maxCrate = Random.Range(3, 7);
-        else throw new System.Exception("diff have an invalid value.");
+        if (cd.crates)
+        {
+            if (diff == 1) maxCrate = Random.Range(1, 4);
+            else if (diff == 2) maxCrate = Random.Range(2, 5);
+            else if (diff == 3) maxCrate = Random.Range(3, 7);
+            else throw new System.Exception("diff have an invalid value.");
+        }
+        else
+            maxCrate = 0;
         int chanceSpawn = 50;
         for (int i = 0; i < maxWall; i++)
         {
@@ -164,9 +180,20 @@ public class GenerateRandomly : MonoBehaviour {
                     }
                     else if (map[i, y].go == objective)
                     {
-                        int randomNb = Random.Range(0, 2);
-                        if (randomNb == 1) randomNb = 3;
-                        map[i, y].go.GetComponent<PowerDown>().pde = (PowerDown.powerDownE)randomNb;
+                        if (!cd.shakePowerup && !cd.keyboardPowerup/* && !cd.magnetPowerup*/)
+                            map[i, y].go.GetComponent<PowerDown>().pde = (PowerDown.powerDownE)5; // None
+                        else
+                        {
+                            int randomNb;
+                            do
+                            {
+                                randomNb = Random.Range(0, 2);
+                                if (randomNb == 1) randomNb = 3;
+                                //else if (randomNb == 2) randomNb = 4;
+                            } while ((randomNb == 0 && !cd.shakePowerup) || (randomNb == 3 && !cd.keyboardPowerup)
+                            /*|| (randomNb == 4 && !cd.magnetPowerup)*/);
+                            map[i, y].go.GetComponent<PowerDown>().pde = (PowerDown.powerDownE)randomNb;
+                        }
                     }
                     else if (map[i, y].go == robotMove)
                     {

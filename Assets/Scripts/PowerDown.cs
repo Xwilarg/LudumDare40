@@ -7,7 +7,9 @@ public class PowerDown : MonoBehaviour {
         addForce,
         darker,
         premium,
-        changeControl
+        changeControl,
+        magnet,
+        none
     }
 
     public Vector3 help;
