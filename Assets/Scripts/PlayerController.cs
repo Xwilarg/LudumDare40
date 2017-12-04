@@ -116,6 +116,18 @@ public class PlayerController : NetworkBehaviour {
         angleDeriv += 0.5f;
     }
 
+    private void disableAllLasers()
+    {
+        GameObject[] all = FindObjectsOfType<GameObject>();
+        foreach (Object o in all)
+        {
+            if (o.name.Length >= 5 && o.name.Substring(0, 5) == "Laser")
+            {
+                (o as GameObject).GetComponent<SpriteRenderer>().enabled = false;
+            }
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("ItemBase1"))
@@ -130,6 +142,7 @@ public class PlayerController : NetworkBehaviour {
                 case 4: increaseDeriv(); pop.reset("<b>AIM</b>"); break;
                 case 5: pop.reset("<b>NONE</b>"); break;
                 case 6: if (secondWeapon) { secondWeapon = false; pop.reset("<b>NO SECONDARY GUN</b>"); } break;
+                case 7: disableAllLasers(); pop.reset("<b>LASER VISION</b>"); break;
                 default: break;
             }
             Destroy(collision.gameObject);
@@ -139,7 +152,7 @@ public class PlayerController : NetworkBehaviour {
             {
                 if (cd.levelPlaying == 7)
                     SceneManager.LoadScene("Victory");
-                if (cd.levelPlaying == 3)
+                else if (cd.levelPlaying == 3)
                 {
                     cd.score += 250;
                     SceneManager.LoadScene("DeathScene");

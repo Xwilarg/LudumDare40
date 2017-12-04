@@ -10,7 +10,8 @@ public class PowerDown : MonoBehaviour {
         changeControl,
         aim,
         none,
-        secondWeapon
+        secondWeapon,
+        laserVision
     }
 
     public Vector3 help;

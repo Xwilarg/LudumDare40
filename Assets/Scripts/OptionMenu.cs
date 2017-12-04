@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class OptionMenu : MonoBehaviour {
 
     CountDeath cd;
-    public Button laserRobots, pushRobots, crates, shakePowerup, keyboardPowerup, magnetPowerup, cornerPowerup, gunPowerup;
+    public Button laserRobots, pushRobots, crates, shakePowerup, keyboardPowerup, magnetPowerup, cornerPowerup, gunPowerup, visionPowerup;
 
     public void switchLaser()
     {
@@ -54,6 +54,12 @@ public class OptionMenu : MonoBehaviour {
         gunPowerup.colors = setBlockColor(gunPowerup.colors, (cd.gunPowerup) ? (Color.green) : (Color.red));
     }
 
+    public void switchVision()
+    {
+        cd.visionPowerup = !cd.visionPowerup;
+        visionPowerup.colors = setBlockColor(visionPowerup.colors, (cd.visionPowerup) ? (Color.green) : (Color.red));
+    }
+
     private ColorBlock setBlockColor(ColorBlock cb, Color color)
     {
         cb.normalColor = color;
@@ -73,5 +79,6 @@ public class OptionMenu : MonoBehaviour {
         magnetPowerup.colors = setBlockColor(magnetPowerup.colors, (cd.magnetPowerup) ? (Color.green) : (Color.red));
         cornerPowerup.colors = setBlockColor(cornerPowerup.colors, (cd.cornerPowerup) ? (Color.green) : (Color.red));
         gunPowerup.colors = setBlockColor(gunPowerup.colors, (cd.gunPowerup) ? (Color.green) : (Color.red));
+        visionPowerup.colors = setBlockColor(visionPowerup.colors, (cd.visionPowerup) ? (Color.green) : (Color.red));
     }
 }

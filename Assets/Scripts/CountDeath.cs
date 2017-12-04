@@ -20,6 +20,7 @@ public class CountDeath : MonoBehaviour {
     public bool magnetPowerup { set; get; }
     public bool cornerPowerup { set; get; }
     public bool gunPowerup { set; get; }
+    public bool visionPowerup { set; get; }
 
     void Start()
     {
@@ -31,6 +32,7 @@ public class CountDeath : MonoBehaviour {
         magnetPowerup = true;
         cornerPowerup = true;
         gunPowerup = true;
+        visionPowerup = true;
         DontDestroyOnLoad(gameObject);
         nbDeath = 0;
         difficulty = 2;
