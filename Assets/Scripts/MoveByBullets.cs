@@ -17,5 +17,12 @@ public class MoveByBullets : MonoBehaviour {
             rb.AddForce(direction * 1000f, ForceMode2D.Impulse);
             Destroy(collision.gameObject);
         }
+        else if (collision.collider.CompareTag("Bullet2"))
+            Destroy(collision.gameObject);
+        else if (collision.collider.CompareTag("BulletFreeze"))
+        {
+            rb.AddForce(direction * 10000f, ForceMode2D.Impulse);
+            Destroy(collision.gameObject);
+        }
     }
 }
