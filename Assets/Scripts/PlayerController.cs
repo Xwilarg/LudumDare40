@@ -111,15 +111,16 @@ public class PlayerController : NetworkBehaviour {
         rb.velocity = Vector2.zero;
     }
 
-    private void createBullet()
+    private void createBullet(Vector3 up)
     {
-        GameObject bulletIns = Instantiate(bullet, gun.transform.position + transform.up, Quaternion.identity);
+        GameObject bulletIns = Instantiate(bullet, transform.position + up, Quaternion.identity);
         bulletIns.GetComponent<DeleteCollision>().owner = gameObject;
         NetworkServer.Spawn(bulletIns);
         // if (isServer)
         //   NetworkServer.SpawnWithClientAuthority(bulletIns, connectionToClient);
-        Vector2 force = transform.up * 1000;
-        RpcLaunchBullet(bulletIns, force);
+        Vector2 force = up * 3000;
+        //RpcLaunchBullet(bulletIns, force);
+        bulletIns.GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
     }
 
     private void launchBullet(GameObject go, Vector2 force)
@@ -128,15 +129,15 @@ public class PlayerController : NetworkBehaviour {
     }
 
      [ClientRpc]
-     private void RpcLaunchBullet(GameObject go, Vector2 force)
+     private void RpcLaunchBullet(GameObject go, Vector3 force)
      {
          launchBullet(go, force);
      }
 
     [Command]
-    private void CmdCreateBullet()
+    private void CmdCreateBullet(Vector3 up)
     {
-        createBullet();
+        createBullet(up);
     }
 
     private void Update ()
@@ -168,9 +169,9 @@ public class PlayerController : NetworkBehaviour {
             if (isNetwork)
             {
                 if (isServer)
-                    createBullet();
+                    createBullet(transform.up);
                 else
-                    CmdCreateBullet();
+                    CmdCreateBullet(transform.up);
             }
             else
             {
@@ -179,7 +180,7 @@ public class PlayerController : NetworkBehaviour {
                 bulletIns.GetComponent<DeleteCollision>().owner = gameObject;
             }
         }
-        if (Input.GetButtonDown("Pause"))
+        if (pause != null && Input.GetButtonDown("Pause"))
         {
             pause.SetActive(true);
             isPause = true;
