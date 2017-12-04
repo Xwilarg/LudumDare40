@@ -141,14 +141,14 @@ public class PlayerController : NetworkBehaviour {
             popup.SetActive(true);
             switch ((int)collision.gameObject.GetComponent<PowerDown>().pde)
             {
-                case 0: addForce++; pop.reset("<b>SHAKE</b>"); break;
-                case 1: hideNext(); pop.reset("<b>CROP SCREEN</b>"); break;
+                case 0: addForce++; pop.reset("<b>SHAKE</b>\n\nDon't stay too close to lasers."); break;
+                case 1: hideNext(); pop.reset("<b>CROP SCREEN</b>\n\nNom nom nom."); break;
                 case 3: changeCommand(); pop.reset("<b>CHANGE KEYS</b>\n\nHere's your new config:"
                     + "\nUp: " + up + ", Down: " + down + ", Left: " + left + ", Right: " + right); break;
-                case 4: increaseDeriv(); pop.reset("<b>AIM</b>"); break;
+                case 4: increaseDeriv(); pop.reset("<b>AIM</b>\n\nNot the best day for sniping."); break;
                 case 5: pop.reset("<b>NONE</b>"); break;
-                case 6: if (secondWeapon) { secondWeapon = false; pop.reset("<b>NO SECONDARY GUN</b>"); } break;
-                case 7: disableAllLasers(); pop.reset("<b>LASER VISION</b>"); break;
+                case 6: if (secondWeapon) { secondWeapon = false; pop.reset("<b>NO SECONDARY GUN</b>\n\nOnly main weapon now."); } break;
+                case 7: disableAllLasers(); pop.reset("<b>LASER VISION</b>\n\nYou can't see them but they are still here."); break;
                 case 2:
                     if (cd.levelPlaying == 1)
                         SceneManager.LoadScene("EasterEgg");
