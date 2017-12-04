@@ -182,9 +182,9 @@ public class PlayerController : NetworkBehaviour {
                 default: break;
             }
             Destroy(collision.gameObject);
-            score++;
             if (cd.levelPlaying == 3)
                 cd.score += 10;
+            score = objectTakeText.text[0] - '0' + 1;
             objectTakeText.text = score.ToString() + "/8";
             if (score == 8 && (cd.levelPlaying < 4 || cd.levelPlaying == 7))
             {
