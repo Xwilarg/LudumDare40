@@ -9,6 +9,9 @@ public class PlayerController : NetworkBehaviour {
 
     public bool inIntro { set; get; }
     public bool isDead { set; get; }
+    private bool isPause;
+
+    private GameObject pause;
 
     public Text objectTakeText;
     public Text relicTakeText;
@@ -24,7 +27,7 @@ public class PlayerController : NetworkBehaviour {
     Camera mainCam;
     private int diff;
     public bool isNetwork { private set; get; }
-    public Vector2 impulse;
+    private Vector2 impulse;
 
     private const float speed = 5.0f;
     private const float bulletSpeed = 15.0f;
@@ -42,6 +45,7 @@ public class PlayerController : NetworkBehaviour {
 
     private void Start()
     {
+        pause = GameObject.FindGameObjectWithTag("Pause").transform.GetChild(0).gameObject;
         impulse = Vector2.zero;
         if (SceneManager.GetActiveScene().name == "DeathScene" || SceneManager.GetActiveScene().name == "MultiScene")
             inIntro = false;
@@ -58,6 +62,7 @@ public class PlayerController : NetworkBehaviour {
         score = 0;
         mainCam = Camera.main;
         isNetwork = (GetComponent<NetworkIdentity>() != null);
+        isPause = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -109,11 +114,27 @@ public class PlayerController : NetworkBehaviour {
 
     private void createBullet()
     {
-        GameObject bulletIns = Instantiate(bullet, gun.transform.position, Quaternion.identity);
+        GameObject bulletIns = Instantiate(bullet, gun.transform.position + transform.up, Quaternion.identity);
         bulletIns.GetComponent<DeleteCollision>().owner = gameObject;
-        NetworkServer.SpawnWithClientAuthority(bulletIns, connectionToClient);
-        bulletIns.GetComponent<NetworkBullet>().launch(gameObject);
+        NetworkServer.Spawn(bulletIns);
+       // if (isServer)
+         //   NetworkServer.SpawnWithClientAuthority(bulletIns, connectionToClient);
+       /* if (isServer)
+            RpcLaunchBullet(bulletIns);
+        else*/
+            launchBullet(bulletIns);
     }
+
+    private void launchBullet(GameObject go)
+    {
+        go.GetComponent<NetworkBullet>().launch(gameObject);
+    }
+
+   /* [ClientRpc]
+    private void RpcLaunchBullet(GameObject go)
+    {
+        launchBullet(go);
+    }*/
 
     [Command]
     private void CmdCreateBullet()
@@ -123,6 +144,14 @@ public class PlayerController : NetworkBehaviour {
 
     private void Update ()
     {
+        if (isPause)
+        {
+            if (Input.GetButtonDown("Pause"))
+            {
+                pause.SetActive(false);
+            }
+            return;
+        }
         if (inIntro || isDead || (isNetwork && !isLocalPlayer)) return;
         float horAxis = Random.Range(-.1f * diff, .1f * diff) * addForce;
         float verAxis = Random.Range(-.1f * diff, .1f * diff) * addForce;
@@ -153,6 +182,11 @@ public class PlayerController : NetworkBehaviour {
                 bulletIns.GetComponent<DeleteCollision>().owner = gameObject;
             }
         }
+        if (Input.GetButtonDown("Pause"))
+        {
+            pause.SetActive(true);
+            isPause = true;
+        }
         rb.velocity = new Vector2(Mathf.Lerp(0, horAxis * speed, 0.8f), Mathf.Lerp(0, verAxis * speed, 0.8f)) + impulse;
         if (Mathf.Abs((rb.velocity.x + rb.velocity.y) / 2) < 1f || Mathf.Abs((impulse.x + impulse.y) / 2) < 1f)
         {
@@ -167,5 +201,10 @@ public class PlayerController : NetworkBehaviour {
             impulse.y -= Time.deltaTime * 10;
         else if (impulse.y < 0f)
             impulse.y += Time.deltaTime * 10;
+    }
+
+    public void removePause()
+    {
+        isPause = false;
     }
 }

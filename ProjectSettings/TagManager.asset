@@ -12,6 +12,7 @@ TagManager:
   - Crate
   - ItemSup
   - NetworkManager
+  - Pause
   layers:
   - Default
   - TransparentFX

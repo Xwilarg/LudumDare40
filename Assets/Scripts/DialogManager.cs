@@ -60,7 +60,7 @@ public class DialogManager : MonoBehaviour {
         else if (curr == typeEvent.intro2)
         {
             if (currId == 0)
-                loadText("Feminine voice", "...", "(Start level 2)", null, null, null);
+                loadText("Feminine voice", "There are still some rocks to clean, do your job.", "Sure", null, null, null);
         }
         else if (curr == typeEvent.random)
         {
