@@ -21,6 +21,9 @@ public class CountDeath : MonoBehaviour {
     public bool cornerPowerup { set; get; }
     public bool gunPowerup { set; get; }
     public bool visionPowerup { set; get; }
+    public bool duplicatePowerup { set; get; }
+    public bool timerPowerup { set; get; }
+    public bool trapPowerup { set; get; }
 
     void Start()
     {
@@ -33,6 +36,9 @@ public class CountDeath : MonoBehaviour {
         cornerPowerup = true;
         gunPowerup = true;
         visionPowerup = true;
+        duplicatePowerup = true;
+        timerPowerup = true;
+        trapPowerup = true;
         DontDestroyOnLoad(gameObject);
         nbDeath = 0;
         difficulty = 2;

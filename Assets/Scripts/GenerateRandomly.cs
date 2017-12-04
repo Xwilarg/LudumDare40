@@ -157,6 +157,9 @@ public class GenerateRandomly : MonoBehaviour {
         int nbCorner = 0;
         int nbGun = 0;
         int nbVision = 0;
+        int nbDuplicate = 0;
+        int nbTimer = 0;
+        int nbTrap = 0;
         for (int i = 0; i < 30; i++)
         {
             for (int y = 0; y < maxY; y++)
@@ -186,7 +189,7 @@ public class GenerateRandomly : MonoBehaviour {
                     }
                     else if (map[i, y].go == objective)
                     {
-                        if (!cd.shakePowerup && !cd.keyboardPowerup && !cd.magnetPowerup && !cd.cornerPowerup && !cd.gunPowerup && !cd.visionPowerup)
+                        if (!cd.shakePowerup && !cd.keyboardPowerup && !cd.magnetPowerup && !cd.cornerPowerup && !cd.gunPowerup && !cd.visionPowerup && !cd.duplicatePowerup && !cd.timerPowerup && !cd.trapPowerup)
                             map[i, y].go.GetComponent<PowerDown>().pde = (PowerDown.powerDownE)5; // None
                         else
                         {
@@ -194,24 +197,31 @@ public class GenerateRandomly : MonoBehaviour {
                             int it = 0;
                             do
                             {
-                                randomNb = Random.Range(0, 6);
+                                randomNb = Random.Range(0, 9);
                                 if (randomNb == 1) randomNb = 3;
                                 else if (randomNb == 2) randomNb = 4;
                                 else if (randomNb == 3) randomNb = 1;
                                 else if (randomNb == 4) randomNb = 6;
                                 else if (randomNb == 5) randomNb = 7;
+                                else if (randomNb == 6) randomNb = 8;
+                                else if (randomNb == 7) randomNb = 9;
+                                else if (randomNb == 8) randomNb = 10;
                                 it++;
                                 if (it == 100) { randomNb = 5; break; }
                             } while ((randomNb == 0 && !cd.shakePowerup) || (randomNb == 3 && !cd.keyboardPowerup)
-                            || (randomNb == 4 && !cd.magnetPowerup) || (randomNb == 1 && !cd.cornerPowerup) || (randomNb == 6 && !cd.gunPowerup) || (randomNb == 7 && !cd.visionPowerup)
+                            || (randomNb == 4 && !cd.magnetPowerup) || (randomNb == 1 && !cd.cornerPowerup) || (randomNb == 6 && !cd.gunPowerup) || (randomNb == 7 && !cd.visionPowerup) || (randomNb == 8 && !cd.duplicatePowerup)
+                            || (randomNb == 9 && !cd.timerPowerup) || (randomNb == 10 && !cd.trapPowerup)
                             || (randomNb == 0 && nbShake >= 4) || (randomNb == 3 && nbKeyboard >= 2) || (randomNb == 4 && nbAim >= 4) || (randomNb == 1 && nbCorner >= 4)
-                            || (randomNb == 6 && nbGun >= 1) || (randomNb == 7 && nbVision >= 1));
+                            || (randomNb == 6 && nbGun >= 1) || (randomNb == 7 && nbVision >= 1) || (randomNb == 8 && nbDuplicate >= 1) || (randomNb == 9 && nbTimer >= 1) || (randomNb == 10 && nbTrap >= 4));
                             if (randomNb == 0) nbShake++;
                             else if (randomNb == 3) nbKeyboard++;
                             else if (randomNb == 4) nbAim++;
                             else if (randomNb == 1) nbCorner++;
                             else if (randomNb == 6) nbGun++;
                             else if (randomNb == 7) nbVision++;
+                            else if (randomNb == 8) nbDuplicate++;
+                            else if (randomNb == 9) nbTimer++;
+                            else if (randomNb == 10) nbTrap++;
                             map[i, y].go.GetComponent<PowerDown>().pde = (PowerDown.powerDownE)randomNb;
                         }
                     }

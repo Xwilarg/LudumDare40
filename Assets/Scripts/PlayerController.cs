@@ -2,10 +2,20 @@
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Collections.Generic;
 
 public class PlayerController : NetworkBehaviour {
     private int addForce;
+
+    public GameObject runEnemy;
+    public GameObject gameOver;
+
+    private const float refTimeDead = 0.5f;
+    private float currTimeDead;
+
+    private const float refTime = 20f;
+    private float currTime;
+
+    public Text timer;
 
     public bool inIntro { set; get; }
     public bool isDead { set; get; }
@@ -61,6 +71,8 @@ public class PlayerController : NetworkBehaviour {
 
     private void Start()
     {
+        currTime = -1f;
+        currTimeDead = -1f;
         angleDeriv = 0f;
         secondWeapon = true;
         currReload = 0f;
@@ -70,7 +82,7 @@ public class PlayerController : NetworkBehaviour {
         left = "Left";
         right = "Right";
         impulse = Vector2.zero;
-        if (SceneManager.GetActiveScene().name == "DeathScene" || SceneManager.GetActiveScene().name == "MultiScene")
+        if (SceneManager.GetActiveScene().name == "DeathScene" || SceneManager.GetActiveScene().name == "MultiScene" || SceneManager.GetActiveScene().name == "RandomScene")
             inIntro = false;
         else
             inIntro = true;
@@ -149,6 +161,18 @@ public class PlayerController : NetworkBehaviour {
                 case 5: pop.reset("<b>NONE</b>"); break;
                 case 6: if (secondWeapon) { secondWeapon = false; pop.reset("<b>NO SECONDARY GUN</b>\n\nOnly main weapon now."); } break;
                 case 7: disableAllLasers(); pop.reset("<b>LASER VISION</b>\n\nYou can't see them but they are still here."); break;
+                case 8: GameObject player = Instantiate(gameObject, new Vector2(-1.268f, -4.23f), Quaternion.identity);
+                    PlayerController pc2 = player.GetComponent<PlayerController>();
+                    pc2.pause = pause; pc2.popup = popup; pc2.pop = pop;
+                    pop.reset("<b>DUPLICATE</b>\n\nWhich one is the real one ? They both are!"); break;
+                case 9:
+                    currTime = 0f;
+                    timer.color = Color.red;
+                    pop.reset("<b>TIMER</b>\n\n20 seconds left."); break;
+                case 10: GameObject enemy = Instantiate(runEnemy, transform.position + transform.up, Quaternion.identity);
+                    enemy.GetComponent<KillPlayer>().player = gameObject; MoveLaser mv = enemy.GetComponentInChildren<MoveLaser>();
+                    mv.gameOver = gameOver; mv.pc = this;
+                    pop.reset("<b>TRAP</b>\n\n Surprise!"); break;
                 case 2:
                     if (cd.levelPlaying == 1)
                         SceneManager.LoadScene("EasterEgg");
@@ -229,6 +253,26 @@ public class PlayerController : NetworkBehaviour {
 
     private void Update ()
     {
+        if (currTimeDead >= refTimeDead)
+        {
+            cd.score -= 100;
+            SceneManager.LoadScene("DeathScene");
+        }
+        else if (currTimeDead >= 0f)
+            currTimeDead += Time.deltaTime;
+        if (currTime >= refTime)
+        {
+            gameOver.SetActive(true);
+            isDead = true;
+            resetVelocity();
+            currTime = -1f;
+            currTimeDead = 0f;
+        }
+        else if (currTime >= 0f)
+        {
+            currTime += Time.deltaTime;
+            timer.text = (20 - currTime).ToString("F") + " seconds remaining";
+        }
         if (currReload > 0f)
             currReload -= Time.deltaTime;
         if (currReload2 > 0f)

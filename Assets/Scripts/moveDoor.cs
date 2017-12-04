@@ -3,10 +3,13 @@
 public class moveDoor : MonoBehaviour {
     
     private Rigidbody2D rb;
+    public bool moveAtStart;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        if (moveAtStart)
+            move();
     }
 
     public void move()

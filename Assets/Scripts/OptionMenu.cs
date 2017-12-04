@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class OptionMenu : MonoBehaviour {
 
     CountDeath cd;
-    public Button laserRobots, pushRobots, crates, shakePowerup, keyboardPowerup, magnetPowerup, cornerPowerup, gunPowerup, visionPowerup;
+    public Button laserRobots, pushRobots, crates, shakePowerup, keyboardPowerup, magnetPowerup, cornerPowerup, gunPowerup, visionPowerup, duplicatePowerup, timerPowerup, trapPowerup;
 
     public void switchLaser()
     {
@@ -60,6 +60,24 @@ public class OptionMenu : MonoBehaviour {
         visionPowerup.colors = setBlockColor(visionPowerup.colors, (cd.visionPowerup) ? (Color.green) : (Color.red));
     }
 
+    public void switchDuplicate()
+    {
+        cd.duplicatePowerup = !cd.duplicatePowerup;
+        duplicatePowerup.colors = setBlockColor(duplicatePowerup.colors, (cd.duplicatePowerup) ? (Color.green) : (Color.red));
+    }
+
+    public void switchTimer()
+    {
+        cd.timerPowerup = !cd.timerPowerup;
+        timerPowerup.colors = setBlockColor(timerPowerup.colors, (cd.timerPowerup) ? (Color.green) : (Color.red));
+    }
+
+    public void switchTrap()
+    {
+        cd.trapPowerup = !cd.trapPowerup;
+        trapPowerup.colors = setBlockColor(trapPowerup.colors, (cd.trapPowerup) ? (Color.green) : (Color.red));
+    }
+
     private ColorBlock setBlockColor(ColorBlock cb, Color color)
     {
         cb.normalColor = color;
@@ -80,5 +98,8 @@ public class OptionMenu : MonoBehaviour {
         cornerPowerup.colors = setBlockColor(cornerPowerup.colors, (cd.cornerPowerup) ? (Color.green) : (Color.red));
         gunPowerup.colors = setBlockColor(gunPowerup.colors, (cd.gunPowerup) ? (Color.green) : (Color.red));
         visionPowerup.colors = setBlockColor(visionPowerup.colors, (cd.visionPowerup) ? (Color.green) : (Color.red));
+        duplicatePowerup.colors = setBlockColor(duplicatePowerup.colors, (cd.duplicatePowerup) ? (Color.green) : (Color.red));
+        timerPowerup.colors = setBlockColor(timerPowerup.colors, (cd.timerPowerup) ? (Color.green) : (Color.red));
+        trapPowerup.colors = setBlockColor(trapPowerup.colors, (cd.trapPowerup) ? (Color.green) : (Color.red));
     }
 }

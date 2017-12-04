@@ -11,7 +11,10 @@ public class PowerDown : MonoBehaviour {
         aim,
         none,
         secondWeapon,
-        laserVision
+        laserVision,
+        duplicate,
+        timer,
+        trap
     }
 
     public Vector3 help;
