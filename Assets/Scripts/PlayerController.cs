@@ -149,6 +149,12 @@ public class PlayerController : NetworkBehaviour {
                 case 5: pop.reset("<b>NONE</b>"); break;
                 case 6: if (secondWeapon) { secondWeapon = false; pop.reset("<b>NO SECONDARY GUN</b>"); } break;
                 case 7: disableAllLasers(); pop.reset("<b>LASER VISION</b>"); break;
+                case 2:
+                    if (cd.levelPlaying == 1)
+                        SceneManager.LoadScene("EasterEgg");
+                    else if (cd.levelPlaying == 2)
+                        SceneManager.LoadScene("EasterEgg2");
+                    break;
                 default: break;
             }
             Destroy(collision.gameObject);

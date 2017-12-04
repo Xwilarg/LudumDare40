@@ -41,7 +41,9 @@ public class MoveLaser : MonoBehaviour {
         else if (collision.CompareTag("Player"))
         {
             PlayerController tmpPc = collision.GetComponent<PlayerController>();
-            if (tmpPc.isNetwork)
+            if (SceneManager.GetActiveScene().name == "EasterEgg")
+                collision.gameObject.transform.position = new Vector2(0f, 0f);
+            else if (tmpPc.isNetwork)
                 collision.gameObject.transform.position = Vector2.zero;
             else if (cd.levelPlaying == 7)
                 collision.gameObject.transform.position = new Vector2(-1.268f, -4.23f);
