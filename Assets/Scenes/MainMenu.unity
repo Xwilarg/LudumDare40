@@ -4956,7 +4956,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Push robot. We give you a "little" speed boost, but you don't want that
+  m_Text: Push robot. Will give you a "little" speed boost, but you don't want that
     too
 --- !u!222 &1636359105
 CanvasRenderer:

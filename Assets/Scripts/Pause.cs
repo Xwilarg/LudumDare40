@@ -20,6 +20,9 @@ public class Pause : MonoBehaviour {
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+            player.GetComponent<PlayerController>().pause = transform.GetChild(0).gameObject;
         transform.GetChild(0).gameObject.SetActive(false);
     }
 

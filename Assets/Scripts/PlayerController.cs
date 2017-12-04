@@ -11,7 +11,7 @@ public class PlayerController : NetworkBehaviour {
     public bool isDead { set; get; }
     private bool isPause;
 
-    private GameObject pause;
+    public GameObject pause { set; private get; }
 
     public Text objectTakeText;
     public Text relicTakeText;
@@ -45,7 +45,6 @@ public class PlayerController : NetworkBehaviour {
 
     private void Start()
     {
-        pause = GameObject.FindGameObjectWithTag("Pause").transform.GetChild(0).gameObject;
         impulse = Vector2.zero;
         if (SceneManager.GetActiveScene().name == "DeathScene" || SceneManager.GetActiveScene().name == "MultiScene")
             inIntro = false;
@@ -117,24 +116,22 @@ public class PlayerController : NetworkBehaviour {
         GameObject bulletIns = Instantiate(bullet, gun.transform.position + transform.up, Quaternion.identity);
         bulletIns.GetComponent<DeleteCollision>().owner = gameObject;
         NetworkServer.Spawn(bulletIns);
-       // if (isServer)
-         //   NetworkServer.SpawnWithClientAuthority(bulletIns, connectionToClient);
-       /* if (isServer)
-            RpcLaunchBullet(bulletIns);
-        else*/
-            launchBullet(bulletIns);
+        // if (isServer)
+        //   NetworkServer.SpawnWithClientAuthority(bulletIns, connectionToClient);
+        Vector2 force = transform.up * 1000;
+        RpcLaunchBullet(bulletIns, force);
     }
 
-    private void launchBullet(GameObject go)
+    private void launchBullet(GameObject go, Vector2 force)
     {
-        go.GetComponent<NetworkBullet>().launch(gameObject);
+        go.GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
     }
 
-   /* [ClientRpc]
-    private void RpcLaunchBullet(GameObject go)
-    {
-        launchBullet(go);
-    }*/
+     [ClientRpc]
+     private void RpcLaunchBullet(GameObject go, Vector2 force)
+     {
+         launchBullet(go, force);
+     }
 
     [Command]
     private void CmdCreateBullet()
