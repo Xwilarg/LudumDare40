@@ -22,7 +22,13 @@ public class Pause : MonoBehaviour {
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
-            player.GetComponent<PlayerController>().pause = transform.GetChild(0).gameObject;
+        {
+            PlayerController pc = player.GetComponent<PlayerController>();
+            pc.pause = transform.GetChild(0).gameObject;
+            pc.popup = transform.GetChild(1).gameObject;
+            pc.pop = transform.GetChild(1).GetComponent<MakeTemporary>();
+            pc.popup.SetActive(false);
+        }
         transform.GetChild(0).gameObject.SetActive(false);
     }
 

@@ -162,7 +162,13 @@ public class GenerateRandomly : MonoBehaviour {
                         go.GetComponent<MoveLaser>().pc = player.GetComponent<PlayerController>();
                         go.GetComponent<MoveLaser>().gameOver = gameOver;
                     }
-                    if (map[i, y].go == robotMove)
+                    else if (map[i, y].go == objective)
+                    {
+                        int randomNb = Random.Range(0, 2);
+                        if (randomNb == 1) randomNb = 3;
+                        map[i, y].go.GetComponent<PowerDown>().pde = (PowerDown.powerDownE)randomNb;
+                    }
+                    else if (map[i, y].go == robotMove)
                     {
                         go.GetComponent<KillPlayer>().player = player;
                         go.GetComponentInChildren<MoveLaser>().pc = player.GetComponent<PlayerController>();

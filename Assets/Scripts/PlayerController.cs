@@ -12,6 +12,8 @@ public class PlayerController : NetworkBehaviour {
     private bool isPause;
 
     public GameObject pause { set; private get; }
+    public GameObject popup { set; get; }
+    public MakeTemporary pop { set; private get; }
 
     public Text objectTakeText;
     public Text relicTakeText;
@@ -29,6 +31,8 @@ public class PlayerController : NetworkBehaviour {
     public bool isNetwork { private set; get; }
     private Vector2 impulse;
 
+    private string up, down, left, right;
+
     private const float speed = 5.0f;
     private const float bulletSpeed = 15.0f;
 
@@ -45,6 +49,10 @@ public class PlayerController : NetworkBehaviour {
 
     private void Start()
     {
+        up = "Up";
+        down = "Down";
+        left = "Left";
+        right = "Right";
         impulse = Vector2.zero;
         if (SceneManager.GetActiveScene().name == "DeathScene" || SceneManager.GetActiveScene().name == "MultiScene")
             inIntro = false;
@@ -64,14 +72,56 @@ public class PlayerController : NetworkBehaviour {
         isPause = false;
     }
 
+    private void swap(ref string a, ref string b)
+    {
+        string t = a;
+        a = b;
+        b = t;
+    }
+
+    private void changeCommand()
+    {
+        int randomNb = Random.Range(0, 3);
+        if (randomNb == 0)
+            swap(ref down, ref up);
+        else if (randomNb == 1)
+            swap(ref down, ref left);
+        else if (randomNb == 2)
+            swap(ref down, ref right);
+        randomNb = Random.Range(0, 3);
+        if (randomNb == 0)
+            swap(ref up, ref down);
+        else if (randomNb == 1)
+            swap(ref up, ref left);
+        else if (randomNb == 2)
+            swap(ref up, ref right);
+        randomNb = Random.Range(0, 3);
+        if (randomNb == 0)
+            swap(ref left, ref up);
+        else if (randomNb == 1)
+            swap(ref left, ref down);
+        else if (randomNb == 2)
+            swap(ref left, ref right);
+        randomNb = Random.Range(0, 3);
+        if (randomNb == 0)
+            swap(ref right, ref up);
+        else if (randomNb == 1)
+            swap(ref right, ref down);
+        else if (randomNb == 2)
+            swap(ref right, ref left);
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("ItemBase1"))
         {
+            popup.SetActive(true);
             switch ((int)collision.gameObject.GetComponent<PowerDown>().pde)
             {
-                case 0: addForce++; break;
-                case 1: hideNext(); break;
+                case 0: addForce++; pop.reset("<b>SHAKE</b>"); break;
+                case 1: hideNext(); pop.reset("<b>CROP SCREEN</b>"); break;
+                case 3: changeCommand(); pop.reset("<b>CHANGE KEYS</b>\n\nHere's your new config:"
+                    + "\nUp: " + up + ", Down: " + down + ", Left: " + left + ", Right: " + right); break;
                 default: break;
             }
             Destroy(collision.gameObject);
@@ -156,13 +206,13 @@ public class PlayerController : NetworkBehaviour {
         Vector3 mouse = mainCam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, mainCam.transform.position.y - transform.position.y));
         float angle = Mathf.Atan2(mouse.y - transform.position.y, mouse.x - transform.position.x);
         transform.rotation = Quaternion.Euler(0, 0, (180 / Mathf.PI) * (angle - 89.5f));
-        if (Input.GetButton("Up"))
+        if (Input.GetButton(up))
             verAxis += 1f;
-        else if (Input.GetButton("Down"))
+        else if (Input.GetButton(down))
             verAxis += -1f;
-        if (Input.GetButton("Left"))
+        if (Input.GetButton(left))
             horAxis += -1f;
-        else if (Input.GetButton("Right"))
+        else if (Input.GetButton(right))
             horAxis += 1f;
         if (Input.GetButtonDown("Fire"))
         {
