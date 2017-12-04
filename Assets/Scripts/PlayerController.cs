@@ -11,6 +11,12 @@ public class PlayerController : NetworkBehaviour {
     public bool isDead { set; get; }
     private bool isPause;
 
+    private const float refReload = 0.05f;
+    private float currReload;
+
+    private const float refReload2 = 0.5f;
+    private float currReload2;
+
     public GameObject pause { set; private get; }
     public GameObject popup { set; get; }
     public MakeTemporary pop { set; private get; }
@@ -21,10 +27,13 @@ public class PlayerController : NetworkBehaviour {
     public Text relicTakeText;
     public GameObject gun;
     public GameObject bullet;
+    public GameObject bullet2;
     private int score;
     public GameObject dark1, dark2, dark3, dark4;
     private int darkCounter;
     public Text deathText;
+
+    private bool secondWeapon;
 
     private SpriteRenderer sr;
     private Rigidbody2D rb;
@@ -51,6 +60,8 @@ public class PlayerController : NetworkBehaviour {
 
     private void Start()
     {
+        secondWeapon = true;
+        currReload = 0f;
         magnetForce = 0f;
         up = "Up";
         down = "Down";
@@ -132,12 +143,13 @@ public class PlayerController : NetworkBehaviour {
                     + "\nUp: " + up + ", Down: " + down + ", Left: " + left + ", Right: " + right); break;
                 case 4: increaseMagnet(); pop.reset("<b>MAGNET</b>"); break;
                 case 5: increaseMagnet(); pop.reset("<b>NONE</b>"); break;
+                case 6: if (secondWeapon) { secondWeapon = false; pop.reset("<b>NO SECONDARY GUN</b>"); } break;
                 default: break;
             }
             Destroy(collision.gameObject);
             score++;
             objectTakeText.text = score.ToString() + "/8";
-            if (score == 8 && cd.levelPlaying != 6)
+            if (score == 8 && cd.levelPlaying < 4)
             {
                 if (cd.levelPlaying == 3)
                 {
@@ -157,7 +169,7 @@ public class PlayerController : NetworkBehaviour {
             Destroy(collision.gameObject);
             relicTakeText.text = "1/1";
         }
-        else if (collision.collider.CompareTag("Bullet") && collision.collider.GetComponent<DeleteCollision>().owner != gameObject)
+        else if ((collision.collider.CompareTag("Bullet") || collision.collider.CompareTag("Bullet2") || collision.collider.CompareTag("BulletFreeze")) && collision.collider.GetComponent<DeleteCollision>().owner != gameObject)
         {
             float angle = Mathf.Atan2(collision.transform.position.y - transform.position.y,
                 collision.transform.position.x - transform.position.x);
@@ -173,12 +185,12 @@ public class PlayerController : NetworkBehaviour {
 
     private void createBullet(Vector3 up)
     {
-        GameObject bulletIns = Instantiate(bullet, transform.position + up, Quaternion.identity);
+        GameObject bulletIns = Instantiate(bullet, transform.position + up / 2, Quaternion.identity);
         bulletIns.GetComponent<DeleteCollision>().owner = gameObject;
         NetworkServer.Spawn(bulletIns);
         // if (isServer)
         //   NetworkServer.SpawnWithClientAuthority(bulletIns, connectionToClient);
-        Vector2 force = up * 3000;
+        Vector2 force = up * 1500;
         //RpcLaunchBullet(bulletIns, force);
         bulletIns.GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
     }
@@ -202,6 +214,10 @@ public class PlayerController : NetworkBehaviour {
 
     private void Update ()
     {
+        if (currReload > 0f)
+            currReload -= Time.deltaTime;
+        if (currReload2 > 0f)
+            currReload2 -= Time.deltaTime;
         if (isPause)
         {
             if (Input.GetButtonDown("Pause"))
@@ -224,10 +240,11 @@ public class PlayerController : NetworkBehaviour {
             horAxis += -1f;
         else if (Input.GetButton(right))
             horAxis += 1f;
-        if (Input.GetButtonDown("Fire"))
+        if (Input.GetButtonDown("Fire") && currReload <= 0f)
         {
             if (isNetwork)
             {
+                currReload = refReload;
                 if (isServer)
                     createBullet(transform.up);
                 else
@@ -239,6 +256,13 @@ public class PlayerController : NetworkBehaviour {
                 bulletIns.GetComponent<Rigidbody2D>().AddForce(transform.up * bulletSpeed, ForceMode2D.Impulse);
                 bulletIns.GetComponent<DeleteCollision>().owner = gameObject;
             }
+        }
+        else if (!isNetwork && Input.GetButtonDown("Fire2") && currReload2 <= 0f && secondWeapon)
+        {
+            currReload2 = refReload2;
+            GameObject bulletIns = Instantiate(bullet2, gun.transform.position, Quaternion.identity);
+            bulletIns.GetComponent<Rigidbody2D>().AddForce(transform.up * bulletSpeed / 3, ForceMode2D.Impulse);
+            bulletIns.GetComponent<DeleteCollision>().owner = gameObject;
         }
         if (pause != null && Input.GetButtonDown("Pause"))
         {

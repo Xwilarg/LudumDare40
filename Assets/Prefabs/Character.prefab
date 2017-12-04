@@ -178,12 +178,12 @@ MonoBehaviour:
   relicTakeText: {fileID: 0}
   gun: {fileID: 1778672825694030}
   bullet: {fileID: 1459312040083888, guid: bb79a4d40c2a0cf448d07d86b8d8b5d3, type: 2}
+  bullet2: {fileID: 1325743175751744, guid: 76b706b76fe35fd4a9e648b2d89a0a63, type: 2}
   dark1: {fileID: 0}
   dark2: {fileID: 0}
   dark3: {fileID: 0}
   dark4: {fileID: 0}
   deathText: {fileID: 0}
-  impulse: {x: 0, y: 0}
 --- !u!212 &212483691408523334
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -8,9 +8,16 @@ public class DeleteCollision : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if ((collision.collider.CompareTag("Wall") && collision.gameObject != owner) || collision.collider.CompareTag("ItemBase1") || collision.collider.CompareTag("ItemSup"))
+        if (((collision.collider.CompareTag("Wall") || collision.collider.CompareTag("BulletFreeze")) && collision.gameObject != owner)
+            || collision.collider.CompareTag("ItemBase1") || collision.collider.CompareTag("ItemSup"))
         {
-            Destroy(gameObject);
+            if (tag == "Bullet2" && collision.collider.CompareTag("BulletFreeze"))
+            {
+                Destroy(collision.gameObject);
+                Destroy(gameObject);
+            }
+            else if (!collision.collider.CompareTag("BulletFreeze"))
+                Destroy(gameObject);
         }
     }
 

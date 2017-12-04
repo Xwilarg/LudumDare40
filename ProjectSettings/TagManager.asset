@@ -12,6 +12,8 @@ TagManager:
   - Crate
   - ItemSup
   - NetworkManager
+  - BulletFreeze
+  - Bullet2
   layers:
   - Default
   - TransparentFX
@@ -23,8 +25,8 @@ TagManager:
   - 
   - Bullet
   - ItemFloor
-  - 
-  - 
+  - Bullet2
+  - BulletFreeze
   - 
   - 
   - 

@@ -9,7 +9,8 @@ public class PowerDown : MonoBehaviour {
         premium,
         changeControl,
         magnet,
-        none
+        none,
+        secondWeapon
     }
 
     public Vector3 help;

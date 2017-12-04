@@ -198,6 +198,7 @@ MonoBehaviour:
   relicTakeText: {fileID: 0}
   gun: {fileID: 1083993371984456}
   bullet: {fileID: 1639467712657210, guid: 629f68f005f0f12419657bdc13b88b2d, type: 2}
+  bullet2: {fileID: 1325743175751744, guid: 76b706b76fe35fd4a9e648b2d89a0a63, type: 2}
   dark1: {fileID: 0}
   dark2: {fileID: 0}
   dark3: {fileID: 0}
