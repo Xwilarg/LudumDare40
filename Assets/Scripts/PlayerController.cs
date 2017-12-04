@@ -2,6 +2,7 @@
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class PlayerController : NetworkBehaviour {
     private int addForce;
@@ -119,13 +120,18 @@ public class PlayerController : NetworkBehaviour {
     private void disableAllLasers()
     {
         GameObject[] all = FindObjectsOfType<GameObject>();
-        foreach (Object o in all)
+        //List<GameObject> lasers = new List<GameObject>();
+        foreach (GameObject go in all)
         {
-            if (o.name.Length >= 5 && o.name.Substring(0, 5) == "Laser")
-            {
-                (o as GameObject).GetComponent<SpriteRenderer>().enabled = false;
-            }
+            if (go.name.Length >= 5 && go.name.Substring(0, 5) == "Laser")
+                go.GetComponent<SpriteRenderer>().enabled = false;
         }
+        /*for (int i = 0; i < cd.difficulty; i++)
+        {
+            int random = Random.Range(0, lasers.Count);
+            lasers[random].GetComponent<SpriteRenderer>().enabled = false;
+            lasers.RemoveAt(random);
+        }*/
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -147,6 +153,8 @@ public class PlayerController : NetworkBehaviour {
             }
             Destroy(collision.gameObject);
             score++;
+            if (cd.levelPlaying == 3)
+                cd.score += 10;
             objectTakeText.text = score.ToString() + "/8";
             if (score == 8 && (cd.levelPlaying < 4 || cd.levelPlaying == 7))
             {

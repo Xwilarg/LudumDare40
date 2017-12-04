@@ -204,7 +204,7 @@ public class GenerateRandomly : MonoBehaviour {
                                 if (it == 100) { randomNb = 5; break; }
                             } while ((randomNb == 0 && !cd.shakePowerup) || (randomNb == 3 && !cd.keyboardPowerup)
                             || (randomNb == 4 && !cd.magnetPowerup) || (randomNb == 1 && !cd.cornerPowerup) || (randomNb == 6 && !cd.gunPowerup) || (randomNb == 7 && !cd.visionPowerup)
-                            || (randomNb == 0 && nbShake >= 4) || (randomNb == 3 && nbKeyboard >= 4) || (randomNb == 4 && nbAim >= 4) || (randomNb == 1 && nbCorner >= 4)
+                            || (randomNb == 0 && nbShake >= 4) || (randomNb == 3 && nbKeyboard >= 2) || (randomNb == 4 && nbAim >= 4) || (randomNb == 1 && nbCorner >= 4)
                             || (randomNb == 6 && nbGun >= 1) || (randomNb == 7 && nbVision >= 1));
                             if (randomNb == 0) nbShake++;
                             else if (randomNb == 3) nbKeyboard++;

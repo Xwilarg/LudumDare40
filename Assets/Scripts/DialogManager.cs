@@ -66,7 +66,8 @@ public class DialogManager : MonoBehaviour {
         {
             DialogBox.SetActive(false);
             pc.inIntro = false;
-            md.move();
+            if (md != null)
+                md.move();
         }
     }
 

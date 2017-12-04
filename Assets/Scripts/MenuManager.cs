@@ -22,4 +22,9 @@ public class MenuManager : MonoBehaviour {
     {
         SceneManager.LoadScene("RandomScene");
     }
+
+    public void loadEasterEgg()
+    {
+        SceneManager.LoadScene("EasterEgg");
+    }
 }
