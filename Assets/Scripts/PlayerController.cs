@@ -96,34 +96,19 @@ public class PlayerController : NetworkBehaviour {
 
     private void changeCommand()
     {
-        int randomNb = Random.Range(0, 3);
-        if (randomNb == 0)
-            swap(ref down, ref up);
-        else if (randomNb == 1)
-            swap(ref down, ref left);
-        else if (randomNb == 2)
-            swap(ref down, ref right);
-        randomNb = Random.Range(0, 3);
+        int randomNb = Random.Range(0, 6);
         if (randomNb == 0)
             swap(ref up, ref down);
         else if (randomNb == 1)
             swap(ref up, ref left);
         else if (randomNb == 2)
             swap(ref up, ref right);
-        randomNb = Random.Range(0, 3);
-        if (randomNb == 0)
-            swap(ref left, ref up);
-        else if (randomNb == 1)
-            swap(ref left, ref down);
-        else if (randomNb == 2)
+        else if (randomNb == 3)
+            swap(ref down, ref left);
+        else if (randomNb == 4)
+            swap(ref down, ref right);
+        else if (randomNb == 5)
             swap(ref left, ref right);
-        randomNb = Random.Range(0, 3);
-        if (randomNb == 0)
-            swap(ref right, ref up);
-        else if (randomNb == 1)
-            swap(ref right, ref down);
-        else if (randomNb == 2)
-            swap(ref right, ref left);
     }
 
     private void increaseDeriv()
