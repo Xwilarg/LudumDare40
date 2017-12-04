@@ -4,7 +4,6 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : NetworkBehaviour {
-
     private int addForce;
 
     public bool inIntro { set; get; }
@@ -151,8 +150,10 @@ public class PlayerController : NetworkBehaviour {
             Destroy(collision.gameObject);
             score++;
             objectTakeText.text = score.ToString() + "/8";
-            if (score == 8 && cd.levelPlaying < 4)
+            if (score == 8 && (cd.levelPlaying < 4 || cd.levelPlaying == 7))
             {
+                if (cd.levelPlaying == 7)
+                    SceneManager.LoadScene("Victory");
                 if (cd.levelPlaying == 3)
                 {
                     cd.score += 250;

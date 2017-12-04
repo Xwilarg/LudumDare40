@@ -77,6 +77,8 @@ public class SetLevel : NetworkBehaviour {
         }
         else if (mode == 6)
             SceneManager.LoadScene("Sandbox");
+        else if (mode == 7)
+            SceneManager.LoadScene("Tutorial");
     }
 
     public void setDiff(int level)

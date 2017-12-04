@@ -43,6 +43,8 @@ public class MoveLaser : MonoBehaviour {
             PlayerController tmpPc = collision.GetComponent<PlayerController>();
             if (tmpPc.isNetwork)
                 collision.gameObject.transform.position = Vector2.zero;
+            else if (cd.levelPlaying == 7)
+                collision.gameObject.transform.position = new Vector2(-1.268f, -4.23f);
             else
             {
                 gameOver.SetActive(true);

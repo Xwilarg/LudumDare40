@@ -32,7 +32,11 @@ public class WinDialogue : MonoBehaviour {
             else if (nbDeath == 0 && diff != 3)
                 GetComponent<Text>().text = "You didn't even die once, you are better than what I would expect. But you were not on the hardest mode thought.";
             else if (nbDeath == 0 && diff == 3)
-                GetComponent<Text>().text = "You didn't even die once, you are better than what I would expect. I would have made you a cake if I knew how to cook.";
+                GetComponent<Text>().text = "You didn't even die once, you are better than what I would expect.";
+        }
+        else if (whichLevel == 7)
+        {
+            GetComponent<Text>().text = "Thanks for finishing the tutorial, you are now ready to play.";
         }
     }
 }
