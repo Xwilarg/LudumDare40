@@ -22,6 +22,7 @@ public class PlayerController : NetworkBehaviour {
     public MakeTemporary pop { set; private get; }
 
     public float magnetForce { private set; get; }
+    public float angleDeriv { private set; get; }
 
     public Text objectTakeText;
     public Text relicTakeText;
@@ -60,6 +61,7 @@ public class PlayerController : NetworkBehaviour {
 
     private void Start()
     {
+        angleDeriv = 0f;
         secondWeapon = true;
         currReload = 0f;
         magnetForce = 0f;
@@ -125,9 +127,9 @@ public class PlayerController : NetworkBehaviour {
             swap(ref right, ref left);
     }
 
-    private void increaseMagnet()
+    private void increaseDeriv()
     {
-        magnetForce += 1f;
+        angleDeriv += 0.5f;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -141,8 +143,8 @@ public class PlayerController : NetworkBehaviour {
                 case 1: hideNext(); pop.reset("<b>CROP SCREEN</b>"); break;
                 case 3: changeCommand(); pop.reset("<b>CHANGE KEYS</b>\n\nHere's your new config:"
                     + "\nUp: " + up + ", Down: " + down + ", Left: " + left + ", Right: " + right); break;
-                case 4: increaseMagnet(); pop.reset("<b>MAGNET</b>"); break;
-                case 5: increaseMagnet(); pop.reset("<b>NONE</b>"); break;
+                case 4: increaseDeriv(); pop.reset("<b>AIM</b>"); break;
+                case 5: pop.reset("<b>NONE</b>"); break;
                 case 6: if (secondWeapon) { secondWeapon = false; pop.reset("<b>NO SECONDARY GUN</b>"); } break;
                 default: break;
             }
@@ -253,7 +255,7 @@ public class PlayerController : NetworkBehaviour {
             else
             {
                 GameObject bulletIns = Instantiate(bullet, gun.transform.position, Quaternion.identity);
-                bulletIns.GetComponent<Rigidbody2D>().AddForce(transform.up * bulletSpeed, ForceMode2D.Impulse);
+                bulletIns.GetComponent<Rigidbody2D>().AddForce((transform.up + new Vector3(Random.Range(-angleDeriv, angleDeriv), Random.Range(-angleDeriv, angleDeriv), 0f)) * bulletSpeed, ForceMode2D.Impulse);
                 bulletIns.GetComponent<DeleteCollision>().owner = gameObject;
             }
         }
@@ -261,7 +263,7 @@ public class PlayerController : NetworkBehaviour {
         {
             currReload2 = refReload2;
             GameObject bulletIns = Instantiate(bullet2, gun.transform.position, Quaternion.identity);
-            bulletIns.GetComponent<Rigidbody2D>().AddForce(transform.up * bulletSpeed / 3, ForceMode2D.Impulse);
+            bulletIns.GetComponent<Rigidbody2D>().AddForce((transform.up + new Vector3(Random.Range(-angleDeriv, angleDeriv), Random.Range(-angleDeriv, angleDeriv), 0f)) * bulletSpeed / 3, ForceMode2D.Impulse);
             bulletIns.GetComponent<DeleteCollision>().owner = gameObject;
         }
         if (pause != null && Input.GetButtonDown("Pause"))

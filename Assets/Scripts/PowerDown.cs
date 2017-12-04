@@ -8,7 +8,7 @@ public class PowerDown : MonoBehaviour {
         darker,
         premium,
         changeControl,
-        magnet,
+        aim,
         none,
         secondWeapon
     }

@@ -18,6 +18,8 @@ public class CountDeath : MonoBehaviour {
     public bool shakePowerup { set; get; }
     public bool keyboardPowerup { set; get; }
     public bool magnetPowerup { set; get; }
+    public bool cornerPowerup { set; get; }
+    public bool gunPowerup { set; get; }
 
     void Start()
     {
@@ -27,6 +29,8 @@ public class CountDeath : MonoBehaviour {
         shakePowerup = true;
         keyboardPowerup = true;
         magnetPowerup = true;
+        cornerPowerup = true;
+        gunPowerup = true;
         DontDestroyOnLoad(gameObject);
         nbDeath = 0;
         difficulty = 2;

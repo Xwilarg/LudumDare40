@@ -151,6 +151,11 @@ public class GenerateRandomly : MonoBehaviour {
             } while (map[xPos, yPos].go != null);
             map[xPos, yPos].go = objective;
         }
+        int nbShake = 0;
+        int nbKeyboard = 0;
+        int nbAim = 0;
+        int nbCorner = 0;
+        int nbGun = 0;
         for (int i = 0; i < 30; i++)
         {
             for (int y = 0; y < maxY; y++)
@@ -180,18 +185,27 @@ public class GenerateRandomly : MonoBehaviour {
                     }
                     else if (map[i, y].go == objective)
                     {
-                        if (!cd.shakePowerup && !cd.keyboardPowerup/* && !cd.magnetPowerup*/)
+                        if (!cd.shakePowerup && !cd.keyboardPowerup && !cd.magnetPowerup)
                             map[i, y].go.GetComponent<PowerDown>().pde = (PowerDown.powerDownE)5; // None
                         else
                         {
                             int randomNb;
+                            int it = 0;
                             do
                             {
-                                randomNb = Random.Range(0, 2);
+                                randomNb = Random.Range(0, 5);
                                 if (randomNb == 1) randomNb = 3;
-                                //else if (randomNb == 2) randomNb = 4;
+                                else if (randomNb == 2) randomNb = 4;
+                                else if (randomNb == 3) randomNb = 1;
+                                else if (randomNb == 4) randomNb = 6;
+                                it++;
+                                if (it == 100) { randomNb = 5; break; }
                             } while ((randomNb == 0 && !cd.shakePowerup) || (randomNb == 3 && !cd.keyboardPowerup)
-                            /*|| (randomNb == 4 && !cd.magnetPowerup)*/);
+                            || (randomNb == 4 && !cd.magnetPowerup) || (randomNb == 1 && !cd.cornerPowerup) || (randomNb == 6 && !cd.gunPowerup)
+                            || (randomNb == 0 && nbShake >= 4) || (randomNb == 3 && nbKeyboard >= 4) || (randomNb == 4 && nbAim >= 4) || (randomNb == 1 && nbCorner >= 4) || (randomNb == 6 && nbGun >= 1));
+                            if (randomNb == 0) nbShake++;
+                            else if (randomNb == 3) nbKeyboard++;
+                            else if (randomNb == 4) nbAim++;
                             map[i, y].go.GetComponent<PowerDown>().pde = (PowerDown.powerDownE)randomNb;
                         }
                     }

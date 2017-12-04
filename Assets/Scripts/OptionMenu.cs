@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class OptionMenu : MonoBehaviour {
 
     CountDeath cd;
-    public Button laserRobots, pushRobots, crates, shakePowerup, keyboardPowerup, magnetPowerup;
+    public Button laserRobots, pushRobots, crates, shakePowerup, keyboardPowerup, magnetPowerup, cornerPowerup, gunPowerup;
 
     public void switchLaser()
     {
@@ -42,6 +42,18 @@ public class OptionMenu : MonoBehaviour {
         magnetPowerup.colors = setBlockColor(magnetPowerup.colors, (cd.magnetPowerup) ? (Color.green) : (Color.red));
     }
 
+    public void switchCorner()
+    {
+        cd.cornerPowerup = !cd.cornerPowerup;
+        cornerPowerup.colors = setBlockColor(cornerPowerup.colors, (cd.cornerPowerup) ? (Color.green) : (Color.red));
+    }
+
+    public void switchGun()
+    {
+        cd.gunPowerup = !cd.gunPowerup;
+        gunPowerup.colors = setBlockColor(gunPowerup.colors, (cd.gunPowerup) ? (Color.green) : (Color.red));
+    }
+
     private ColorBlock setBlockColor(ColorBlock cb, Color color)
     {
         cb.normalColor = color;
@@ -59,5 +71,7 @@ public class OptionMenu : MonoBehaviour {
         shakePowerup.colors = setBlockColor(shakePowerup.colors, (cd.shakePowerup) ? (Color.green) : (Color.red));
         keyboardPowerup.colors = setBlockColor(keyboardPowerup.colors, (cd.keyboardPowerup) ? (Color.green) : (Color.red));
         magnetPowerup.colors = setBlockColor(magnetPowerup.colors, (cd.magnetPowerup) ? (Color.green) : (Color.red));
+        cornerPowerup.colors = setBlockColor(cornerPowerup.colors, (cd.cornerPowerup) ? (Color.green) : (Color.red));
+        gunPowerup.colors = setBlockColor(gunPowerup.colors, (cd.gunPowerup) ? (Color.green) : (Color.red));
     }
 }
