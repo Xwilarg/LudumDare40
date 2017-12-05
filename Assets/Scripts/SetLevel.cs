@@ -65,7 +65,7 @@ public class SetLevel : NetworkBehaviour {
         {
            // if (!checkIp())
              //   msgError.text = "The format of the IP is incorrect.";
-            if (ip.text != "" || port.text != "")
+            if (ip.text != "" && port.text != "")
             {
                 cd.port = System.Convert.ToInt32(port.text);
                 cd.ip = ip.text;
