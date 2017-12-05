@@ -229,7 +229,7 @@ public class PlayerController : NetworkBehaviour {
         NetworkServer.Spawn(bulletIns);
         // if (isServer)
         //   NetworkServer.SpawnWithClientAuthority(bulletIns, connectionToClient);
-        Vector2 force = up * 1500;
+        Vector2 force = up * 700;
         //RpcLaunchBullet(bulletIns, force);
         bulletIns.GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
     }
